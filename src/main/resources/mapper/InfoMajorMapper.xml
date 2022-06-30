@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.InfoMajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.InfoMajor">
+            <id property="major_code" column="major_code" jdbcType="INTEGER"/>
+            <result property="major_name" column="major_name" jdbcType="VARCHAR"/>
+            <result property="major_year" column="major_year" jdbcType="VARCHAR"/>
+            <result property="major_subject" column="major_subject" jdbcType="INTEGER"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        major_code,major_name,major_year,
+        major_subject,create_time,update_time
+    </sql>
+</mapper>

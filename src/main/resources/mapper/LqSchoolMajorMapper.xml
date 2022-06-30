@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.LqSchoolMajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.LqSchoolMajor">
+            <id property="lq_school_major_code" column="lq_school_major_code" jdbcType="INTEGER"/>
+            <result property="lq_school_major_school" column="lq_school_major_school" jdbcType="INTEGER"/>
+            <result property="lq_school_major_major" column="lq_school_major_major" jdbcType="INTEGER"/>
+            <result property="lq_school_major_year" column="lq_school_major_year" jdbcType="VARCHAR"/>
+            <result property="lq_school_major_province" column="lq_school_major_province" jdbcType="INTEGER"/>
+            <result property="lq_school_major_max_score" column="lq_school_major_max_score" jdbcType="INTEGER"/>
+            <result property="lq_school_major_min_score" column="lq_school_major_min_score" jdbcType="INTEGER"/>
+            <result property="lq_school_major_high_rank" column="lq_school_major_high_rank" jdbcType="INTEGER"/>
+            <result property="lq_school_major_low_rank" column="lq_school_major_low_rank" jdbcType="INTEGER"/>
+            <result property="lq_school_major_p_line" column="lq_school_major_p_line" jdbcType="INTEGER"/>
+            <result property="lq_school_major_average_score" column="lq_school_major_average_score" jdbcType="INTEGER"/>
+            <result property="lq_school_major_zslx" column="lq_school_major_zslx" jdbcType="INTEGER"/>
+            <result property="lq_school_major_pc" column="lq_school_major_pc" jdbcType="INTEGER"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        lq_school_major_code,lq_school_major_school,lq_school_major_major,
+        lq_school_major_year,lq_school_major_province,lq_school_major_max_score,
+        lq_school_major_min_score,lq_school_major_high_rank,lq_school_major_low_rank,
+        lq_school_major_p_line,lq_school_major_average_score,lq_school_major_zslx,
+        lq_school_major_pc,create_time,update_time
+    </sql>
+</mapper>

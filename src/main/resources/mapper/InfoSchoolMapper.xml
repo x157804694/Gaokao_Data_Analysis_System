@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.InfoSchoolMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.InfoSchool">
+            <id property="school_code" column="school_code" jdbcType="INTEGER"/>
+            <result property="school_id" column="school_id" jdbcType="INTEGER"/>
+            <result property="school_name" column="school_name" jdbcType="VARCHAR"/>
+            <result property="school_level" column="school_level" jdbcType="VARCHAR"/>
+            <result property="school_type" column="school_type" jdbcType="VARCHAR"/>
+            <result property="school_nature" column="school_nature" jdbcType="VARCHAR"/>
+            <result property="school_region" column="school_region" jdbcType="VARCHAR"/>
+            <result property="school_province" column="school_province" jdbcType="VARCHAR"/>
+            <result property="school_city" column="school_city" jdbcType="VARCHAR"/>
+            <result property="school_211" column="school_211" jdbcType="INTEGER"/>
+            <result property="school_985" column="school_985" jdbcType="INTEGER"/>
+            <result property="school_belong" column="school_belong" jdbcType="VARCHAR"/>
+            <result property="school_rk" column="school_rk" jdbcType="INTEGER"/>
+            <result property="school_xyh" column="school_xyh" jdbcType="INTEGER"/>
+            <result property="school_wsl" column="school_wsl" jdbcType="INTEGER"/>
+            <result property="school_qs" column="school_qs" jdbcType="INTEGER"/>
+            <result property="school_us" column="school_us" jdbcType="INTEGER"/>
+            <result property="school_tws" column="school_tws" jdbcType="INTEGER"/>
+            <result property="school_requirments" column="school_requirments" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        school_code,school_id,school_name,
+        school_level,school_type,school_nature,
+        school_region,school_province,school_city,
+        school_211,school_985,school_belong,
+        school_rk,school_xyh,school_wsl,
+        school_qs,school_us,school_tws,
+        school_requirments,create_time,update_time
+    </sql>
+</mapper>

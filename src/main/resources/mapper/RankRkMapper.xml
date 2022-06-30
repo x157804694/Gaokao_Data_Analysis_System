@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.RankRkMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.RankRk">
+            <id property="rk_code" column="rk_code" jdbcType="INTEGER"/>
+            <result property="rk_school" column="rk_school" jdbcType="INTEGER"/>
+            <result property="rk_rank" column="rk_rank" jdbcType="INTEGER"/>
+            <result property="rk_year" column="rk_year" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        rk_code,rk_school,rk_rank,
+        rk_year,create_time,update_time
+    </sql>
+</mapper>

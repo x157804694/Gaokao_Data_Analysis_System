@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.ZsSchoolMajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.ZsSchoolMajor">
+            <id property="zs_school_major_code" column="zs_school_major_code" jdbcType="INTEGER"/>
+            <result property="zs_school_major_school" column="zs_school_major_school" jdbcType="INTEGER"/>
+            <result property="zs_school_major_major" column="zs_school_major_major" jdbcType="INTEGER"/>
+            <result property="zs_school_major_year" column="zs_school_major_year" jdbcType="VARCHAR"/>
+            <result property="zs_school_major_number" column="zs_school_major_number" jdbcType="INTEGER"/>
+            <result property="zs_school_major_qj_flag" column="zs_school_major_qj_flag" jdbcType="INTEGER"/>
+            <result property="zs_school_major_province" column="zs_school_major_province" jdbcType="INTEGER"/>
+            <result property="zs_school_major_zslx" column="zs_school_major_zslx" jdbcType="INTEGER"/>
+            <result property="zs_school_major_pc" column="zs_school_major_pc" jdbcType="INTEGER"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        zs_school_major_code,zs_school_major_school,zs_school_major_major,
+        zs_school_major_year,zs_school_major_number,zs_school_major_qj_flag,
+        zs_school_major_province,zs_school_major_zslx,zs_school_major_pc,
+        create_time,update_time
+    </sql>
+</mapper>

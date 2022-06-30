@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.PlanDualMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual">
+            <id property="dual_code" column="dual_code" jdbcType="INTEGER"/>
+            <result property="dual_school" column="dual_school" jdbcType="INTEGER"/>
+            <result property="dual_year" column="dual_year" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        dual_code,dual_school,dual_year,
+        create_time,update_time
+    </sql>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual">
+        SELECT t1.*,t2.school_name as dual_schoolName FROM t_plan_dual as t1 LEFT JOIN t_info_school as t2 on t1.dual_school = t2.school_id
+    </select>
+</mapper>

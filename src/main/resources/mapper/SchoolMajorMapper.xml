@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.SchoolMajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor">
+            <id property="school_major_code" column="school_major_code" jdbcType="INTEGER"/>
+            <result property="school_major_school" column="school_major_school" jdbcType="INTEGER"/>
+            <result property="school_major_subject" column="school_major_subject" jdbcType="VARCHAR"/>
+            <result property="school_majort_major" column="school_majort_major" jdbcType="INTEGER"/>
+            <result property="school_major_time" column="school_major_time" jdbcType="VARCHAR"/>
+            <result property="school_major_cost" column="school_major_cost" jdbcType="VARCHAR"/>
+            <result property="school_major_2_phd_flag" column="school_major_2_phd_flag" jdbcType="INTEGER"/>
+            <result property="school_major_master_flag" column="school_major_master_flag" jdbcType="INTEGER"/>
+            <result property="school_major_rank" column="school_major_rank" jdbcType="INTEGER"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        school_major_code,school_major_school,school_major_subject,
+        school_majort_major,school_major_time,school_major_cost,
+        school_major_2_phd_flag,school_major_master_flag,school_major_rank,
+        create_time,update_time
+    </sql>
+</mapper>
