@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/pc")
 @Log4j
-
 public class PcController {
+
     private InfoPcServiceImpl pcService;
 
     @Autowired
