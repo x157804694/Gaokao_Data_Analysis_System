@@ -122,6 +122,7 @@ public class PlanController {
             }
         }
         else {
+            log.info("---双一流code不存在");
             return ResponseResult.FAILED("双一流code不存在");
         }
     }
@@ -203,6 +204,7 @@ public class PlanController {
             }
         }
         else {
+            log.info("---强基计划code不存在");
             return ResponseResult.FAILED("强基计划code不存在");
         }
     }
@@ -284,6 +286,7 @@ public class PlanController {
             }
         }
         else {
+            log.info("---双高计划code不存在");
             return ResponseResult.FAILED("双高计划code不存在");
         }
     }
