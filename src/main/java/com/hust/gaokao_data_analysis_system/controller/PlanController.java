@@ -6,6 +6,8 @@ import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoSchool;
 import com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual;
+import com.hust.gaokao_data_analysis_system.pojo.entity.PlanQj;
+import com.hust.gaokao_data_analysis_system.pojo.entity.PlanSg;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoSchoolServiceImpl;
 import com.hust.gaokao_data_analysis_system.service.impl.PlanDualServiceImpl;
 import com.hust.gaokao_data_analysis_system.service.impl.PlanQjServiceImpl;
@@ -57,17 +59,20 @@ public class PlanController {
     public ResponseResult addDualPlan(@RequestBody PlanDual addDual) {
         // 判断添加的学校已存在
         QueryWrapper<PlanDual> qw = new QueryWrapper<>();
-        QueryWrapper<InfoSchool> qw2 = new QueryWrapper<>();
         qw.eq("dual_school", addDual.getDual_school());
-        qw2.eq("school_id", addDual.getDual_school());
         PlanDual dual = dualService.getOne(qw);
-        InfoSchool school = schoolService.getOne(qw2);
         if (dual == null) {
             // 该表依赖学校信息表，这个学校必须在学校信息表中存在
+            QueryWrapper<InfoSchool> qw2 = new QueryWrapper<>();
+            qw2.eq("school_id", addDual.getDual_school());
+            InfoSchool school = schoolService.getOne(qw2);
             if (school != null) {
                 boolean result = dualService.save(addDual);
                 if (result) {
                     log.info("---新增双一流高校" + addDual);
+                    // 给该高校信息中的school_dual字段修改为1
+                    school.setSchool_dual(1);
+                    schoolService.updateById(school);
                     return ResponseResult.SUCCESS().setData(addDual);
                 } else {
                     log.info("---新增失败" + addDual);
@@ -97,13 +102,189 @@ public class PlanController {
 
     @DeleteMapping("/dual/delete/{dualCode}")
     public ResponseResult deleteDualPlan(@PathVariable("dualCode") long dualCode) {
-        boolean result = dualService.removeById(dualCode);
-        if (result) {
-            log.info("---删除双一流学校成功");
-            return ResponseResult.SUCCESS();
+        // 根据code获取实例对象
+        PlanDual dual = dualService.getById(dualCode);
+        if (dual!=null){
+            boolean result = dualService.removeById(dualCode);
+            if (result) {
+                log.info("---删除双一流信息表记录成功");
+                // 查询依赖的学校信息
+                QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
+                qw.eq("school_id", dual.getDual_school());
+                InfoSchool school = schoolService.getOne(qw);
+                // 给该高校信息中的school_dual字段修改为0
+                school.setSchool_dual(0);
+                schoolService.updateById(school);
+                return ResponseResult.SUCCESS();
+            } else {
+                log.info("---删除失败");
+                return ResponseResult.FAILED("删除失败");
+            }
+        }
+        else {
+            return ResponseResult.FAILED("双一流code不存在");
+        }
+    }
+
+    @PostMapping("/qj/list")
+    public ResponseResult getAllQjPlan(@RequestBody PageRequest pageRequest) {
+        int currentPage = pageRequest.getCurrentPage();
+        int pageSize = pageRequest.getPageSize();
+        Page pg = new Page<>(currentPage, pageSize);
+        Page pageDualPlans = qjService.findAll(pg);
+        log.info("---分页查询强基计划高校名单" + pageDualPlans);
+        return ResponseResult.SUCCESS().setData(pageDualPlans);
+    }
+
+    @PostMapping("/qj/add")
+    public ResponseResult addQjPlan(@RequestBody PlanQj addQj) {
+        // 判断添加的学校已存在
+        QueryWrapper<PlanQj> qw = new QueryWrapper<>();
+        qw.eq("qj_school", addQj.getQj_school());
+        PlanQj qj = qjService.getOne(qw);
+        if (qj == null) {
+            // 该表依赖学校信息表，这个学校必须在学校信息表中存在
+            QueryWrapper<InfoSchool> qw2 = new QueryWrapper<>();
+            qw2.eq("school_id", addQj.getQj_school());
+            InfoSchool school = schoolService.getOne(qw2);
+            if (school != null) {
+                boolean result = qjService.save(addQj);
+                if (result) {
+                    log.info("---新增强基计划高校" + addQj);
+                    // 给该高校信息中的school_dual字段修改为1
+                    school.setSchool_qj(1);
+                    schoolService.updateById(school);
+                    return ResponseResult.SUCCESS().setData(addQj);
+                } else {
+                    log.info("---新增失败" + addQj);
+                    return ResponseResult.FAILED("新增失败");
+                }
+            } else {
+                log.info("---学校信息表中无此学校"+addQj);
+                return ResponseResult.FAILED("请先添加该学校基本信息，再进行操作");
+            }
         } else {
-            log.info("---删除失败");
-            return ResponseResult.FAILED("删除失败");
+            log.info("---该学校已经存在此表中"+addQj);
+            return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
+        }
+    }
+
+    @PostMapping("/qj/update")
+    public ResponseResult updateQjPlan(@RequestBody PlanQj updateQj) {
+        boolean result = qjService.updateById(updateQj);
+        if (result) {
+            log.info("---修改成功" + updateQj);
+            return ResponseResult.SUCCESS().setData(updateQj);
+        } else {
+            log.info("---修改失败");
+            return ResponseResult.FAILED("修改失败");
+        }
+    }
+
+    @DeleteMapping("/qj/delete/{qjCode}")
+    public ResponseResult deleteQjPlan(@PathVariable("qjCode") long qjCode) {
+        // 根据code获取实例对象
+        PlanQj qj = qjService.getById(qjCode);
+        if (qj!=null){
+            boolean result = qjService.removeById(qjCode);
+            if (result) {
+                log.info("---删除强基计划信息表记录成功");
+                // 查询依赖的学校信息
+                QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
+                qw.eq("school_id", qj.getQj_school());
+                InfoSchool school = schoolService.getOne(qw);
+                // 给该高校信息中的school_qj字段修改为0
+                school.setSchool_qj(0);
+                schoolService.updateById(school);
+                return ResponseResult.SUCCESS();
+            } else {
+                log.info("---删除失败");
+                return ResponseResult.FAILED("删除失败");
+            }
+        }
+        else {
+            return ResponseResult.FAILED("强基计划code不存在");
+        }
+    }
+
+    @PostMapping("/sg/list")
+    public ResponseResult getAllSgPlan(@RequestBody PageRequest pageRequest) {
+        int currentPage = pageRequest.getCurrentPage();
+        int pageSize = pageRequest.getPageSize();
+        Page pg = new Page<>(currentPage, pageSize);
+        Page pageDualPlans = sgService.findAll(pg);
+        log.info("---分页查询双高计划高校名单" + pageDualPlans);
+        return ResponseResult.SUCCESS().setData(pageDualPlans);
+    }
+
+    @PostMapping("/sg/add")
+    public ResponseResult addSgPlan(@RequestBody PlanSg addSg) {
+        // 判断添加的学校已存在
+        QueryWrapper<PlanSg> qw = new QueryWrapper<>();
+        qw.eq("sg_school", addSg.getSg_school());
+        PlanSg qj = sgService.getOne(qw);
+        if (qj == null) {
+            // 该表依赖学校信息表，这个学校必须在学校信息表中存在
+            QueryWrapper<InfoSchool> qw2 = new QueryWrapper<>();
+            qw2.eq("school_id", addSg.getSg_school());
+            InfoSchool school = schoolService.getOne(qw2);
+            if (school != null) {
+                boolean result = sgService.save(addSg);
+                if (result) {
+                    log.info("---新增双高计划高校" + addSg);
+                    // 给该高校信息中的school_sg字段修改为1
+                    school.setSchool_sg(1);
+                    schoolService.updateById(school);
+                    return ResponseResult.SUCCESS().setData(addSg);
+                } else {
+                    log.info("---新增失败" + addSg);
+                    return ResponseResult.FAILED("新增失败");
+                }
+            } else {
+                log.info("---学校信息表中无此学校"+addSg);
+                return ResponseResult.FAILED("请先添加该学校基本信息，再进行操作");
+            }
+        } else {
+            log.info("---该学校已经存在此表中"+addSg);
+            return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
+        }
+    }
+
+    @PostMapping("/sg/update")
+    public ResponseResult updateSgPlan(@RequestBody PlanSg updateSg) {
+        boolean result = sgService.updateById(updateSg);
+        if (result) {
+            log.info("---修改成功" + updateSg);
+            return ResponseResult.SUCCESS().setData(updateSg);
+        } else {
+            log.info("---修改失败");
+            return ResponseResult.FAILED("修改失败");
+        }
+    }
+
+    @DeleteMapping("/sg/delete/{sgCode}")
+    public ResponseResult deleteSGPlan(@PathVariable("sgCode") long sgCode) {
+        // 根据code获取实例对象
+        PlanSg sg = sgService.getById(sgCode);
+        if (sg!=null){
+            boolean result = sgService.removeById(sgCode);
+            if (result) {
+                log.info("---删除双高计划信息表记录成功");
+                // 查询依赖的学校信息
+                QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
+                qw.eq("school_id", sg.getSg_school());
+                InfoSchool school = schoolService.getOne(qw);
+                // 给该高校信息中的school_sg字段修改为0
+                school.setSchool_sg(0);
+                schoolService.updateById(school);
+                return ResponseResult.SUCCESS();
+            } else {
+                log.info("---删除失败");
+                return ResponseResult.FAILED("删除失败");
+            }
+        }
+        else {
+            return ResponseResult.FAILED("双高计划code不存在");
         }
     }
 }

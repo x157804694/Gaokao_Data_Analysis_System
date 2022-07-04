@@ -15,4 +15,7 @@ public class SchoolInfoQueryDTO extends PageRequest {
     private int school_211;
     private int school_985;
     private String school_belong;
+    private int school_dual;
+    private int school_qj;
+    private int school_sg;
 }

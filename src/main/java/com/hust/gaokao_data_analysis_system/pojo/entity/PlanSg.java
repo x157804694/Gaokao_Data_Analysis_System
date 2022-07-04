@@ -41,4 +41,7 @@ public class PlanSg extends BasicClass implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    @TableField(exist = false)
+    private String sg_schoolName;
 }

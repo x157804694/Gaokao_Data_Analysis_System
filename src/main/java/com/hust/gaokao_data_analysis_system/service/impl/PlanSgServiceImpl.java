@@ -1,9 +1,11 @@
 package com.hust.gaokao_data_analysis_system.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hust.gaokao_data_analysis_system.pojo.entity.PlanSg;
 import com.hust.gaokao_data_analysis_system.service.PlanSgService;
 import com.hust.gaokao_data_analysis_system.mapper.PlanSgMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +17,17 @@ import org.springframework.stereotype.Service;
 public class PlanSgServiceImpl extends ServiceImpl<PlanSgMapper, PlanSg>
     implements PlanSgService{
 
+    private PlanSgMapper sgMapper;
+
+    @Autowired
+    public void setSgMapper(PlanSgMapper sgMapper){
+        this.sgMapper = sgMapper;
+    }
+
+    @Override
+    public Page<PlanSg> findAll(Page<PlanSg> page) {
+        return sgMapper.findAll(page);
+    }
 }
 
 

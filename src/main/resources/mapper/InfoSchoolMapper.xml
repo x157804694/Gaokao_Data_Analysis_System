@@ -26,6 +26,9 @@
             <result property="school_requirments" column="school_requirments" jdbcType="VARCHAR"/>
             <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="school_dual" column="school_dual" jdbcType="INTEGER"/>
+            <result property="school_qj" column="school_qj" jdbcType="INTEGER"/>
+            <result property="school_sg" column="school_sg" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -35,6 +38,7 @@
         school_211,school_985,school_belong,
         school_rk,school_xyh,school_wsl,
         school_qs,school_us,school_tws,
-        school_requirments,create_time,update_time
+        school_requirments,create_time,update_time,
+        school_dual,school_qj,school_sg
     </sql>
 </mapper>

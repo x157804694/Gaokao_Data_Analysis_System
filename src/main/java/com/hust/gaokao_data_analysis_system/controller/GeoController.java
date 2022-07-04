@@ -40,13 +40,20 @@ public class GeoController {
     }
 
     @PostMapping("/region/list")
-    public ResponseResult getAllRegion(@RequestBody PageRequest pageRequest) {
+    public ResponseResult getAllRegionByPage(@RequestBody PageRequest pageRequest) {
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
         Page pageRegions = regionService.page(pg);
         log.info(pageRegions.getRecords() + "---分页查询所有区域");
         return ResponseResult.SUCCESS().setData(pageRegions);
+    }
+
+    @GetMapping("/region/listAll")
+    public ResponseResult getAllRegion() {
+        List<GeoRegion> regions = regionService.list();
+        log.info(regions + "---查询所有区域");
+        return ResponseResult.SUCCESS().setData(regions);
     }
 
     @PostMapping("/region/add")
@@ -94,8 +101,15 @@ public class GeoController {
         }
     }
 
+    @GetMapping("/province/listAll/{regionCode}")
+    public ResponseResult getAllProvinceByRegion(@PathVariable("regionCode") long regionCode) {
+        List<GeoProvince> provinces = provinceService.list(new QueryWrapper<GeoProvince>().eq("province_region",regionCode));
+        log.info(provinces + "---根据区域号查询所有省份");
+        return ResponseResult.SUCCESS().setData(provinces);
+    }
+
     @PostMapping("/province/list")
-    public ResponseResult getAllProvince(@RequestBody PageRequest pageRequest) {
+    public ResponseResult getAllProvinceByPage(@RequestBody PageRequest pageRequest) {
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
@@ -162,13 +176,20 @@ public class GeoController {
     }
 
     @PostMapping("/city/list")
-    public ResponseResult getAllCity(@RequestBody PageRequest pageRequest) {
+    public ResponseResult getAllCityByPage(@RequestBody PageRequest pageRequest) {
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
         Page pageCities = cityService.page(pg);
         log.info(pageCities.getRecords() + "---分页查询所有城市");
         return ResponseResult.SUCCESS().setData(pageCities);
+    }
+
+    @GetMapping("/city/listAll/{provinceCode}")
+    public ResponseResult getAllCity(@PathVariable("provinceCode") long provinceCode) {
+        List<GeoCity> cities = cityService.list(new QueryWrapper<GeoCity>().eq("city_province", provinceCode));
+        log.info(cities + "---查询当前省份所有城市");
+        return ResponseResult.SUCCESS().setData(cities);
     }
 
     @PostMapping("/city/list/{cityProvince}")
