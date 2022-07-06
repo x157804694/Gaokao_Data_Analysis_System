@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,7 +29,14 @@ public class SchoolInfoController {
     }
 
     @PostMapping("/listAll")
-    public ResponseResult getAllSchool(@RequestBody PageRequest pageRequest) {
+    public ResponseResult getAllSchool(){
+        List<InfoSchool> schoolList = schoolService.list();
+        log.info("---查询所有学校信息"+schoolList);
+        return ResponseResult.SUCCESS().setData(schoolList);
+    }
+
+    @PostMapping("/listByPage")
+    public ResponseResult getAllSchoolByPage(@RequestBody PageRequest pageRequest) {
         // 获取页面参数
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();

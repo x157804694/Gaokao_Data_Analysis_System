@@ -42,9 +42,9 @@ public class SubjectController {
         return ResponseResult.SUCCESS().setData(pageSubjects);
     }
 
-    @PostMapping("/listAll/{disciplineCode}")
-    public ResponseResult getAllSubjectByDiscipline(@PathVariable("disciplineCode") String disciplineCode) {
-        List<InfoSubject> subjects = subjectService.list(new QueryWrapper<InfoSubject>().eq("subject_discipline",disciplineCode));
+    @PostMapping("/listAll/{disciplineId}")
+    public ResponseResult getAllSubjectByDiscipline(@PathVariable("disciplineId") String disciplineId) {
+        List<InfoSubject> subjects = subjectService.list(new QueryWrapper<InfoSubject>().eq("subject_discipline",disciplineId));
         log.info("---根据学科门类查询所有一级学科" + subjects);
         return ResponseResult.SUCCESS().setData(subjects);
     }
