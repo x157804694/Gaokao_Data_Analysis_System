@@ -47,4 +47,7 @@ public class RankUs extends BasicClass implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    @TableField(exist = false)
+    private String us_schoolName;
 }

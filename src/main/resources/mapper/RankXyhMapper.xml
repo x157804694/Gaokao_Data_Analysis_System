@@ -17,4 +17,10 @@
         xyh_code,xyh_school,xyh_rank,
         xyh_year,create_time,update_time
     </sql>
+    <select id="findNewest" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankXyh" parameterType="Integer">
+        select * from t_rank_xyh where (xyh_school,xyh_year) in (select xyh_school,max(xyh_year) from t_rank_xyh where xyh_school = (#{xyh_school}))
+    </select>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankXyh">
+        SELECT t1.*,t2.school_name as xyh_schoolName FROM t_rank_xyh as t1 LEFT JOIN t_info_school as t2 on t1.xyh_school = t2.school_id
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.hust.gaokao_data_analysis_system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hust.gaokao_data_analysis_system.pojo.entity.RankQs;
 import com.hust.gaokao_data_analysis_system.pojo.entity.RankTws;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface RankTwsService extends IService<RankTws> {
 
+    RankTws findNewest(Integer tws_school);
+
+    Page<RankTws> findAll(Page<RankTws> page);
 }

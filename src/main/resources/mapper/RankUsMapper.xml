@@ -17,4 +17,10 @@
         us_code,us_school,us_rank,
         us_year,create_time,update_time
     </sql>
+    <select id="findNewest" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankUs" parameterType="Integer">
+        select * from t_rank_us where (us_school,us_year) in (select us_school,max(us_year) from t_rank_us where us_school = (#{us_school}))
+    </select>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankUs">
+        SELECT t1.*,t2.school_name as us_schoolName FROM t_rank_us as t1 LEFT JOIN t_info_school as t2 on t1.us_school = t2.school_id
+    </select>
 </mapper>

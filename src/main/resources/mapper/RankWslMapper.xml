@@ -17,4 +17,10 @@
         wsl_code,wsl_school,wsl_rank,
         wsl_year,create_time,update_time
     </sql>
+    <select id="findNewest" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankWsl" parameterType="Integer">
+        select * from t_rank_wsl where (wsl_school,wsl_year) in (select wsl_school,max(wsl_year) from t_rank_wsl where wsl_school = (#{wsl_school}))
+    </select>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankWsl">
+        SELECT t1.*,t2.school_name as wsl_schoolName FROM t_rank_wsl as t1 LEFT JOIN t_info_school as t2 on t1.wsl_school = t2.school_id
+    </select>
 </mapper>
