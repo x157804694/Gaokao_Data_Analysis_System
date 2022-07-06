@@ -6,6 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.InfoDiscipline">
             <id property="discipline_code" column="discipline_code" jdbcType="INTEGER"/>
+            <result property="discipline_id" column="discipline_id" jdbcType="VARCHAR"/>
             <result property="discipline_name" column="discipline_name" jdbcType="VARCHAR"/>
             <result property="discipline_level" column="discipline_level" jdbcType="VARCHAR"/>
             <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
@@ -13,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        discipline_code,discipline_name,discipline_level,
+        discipline_code,discipline_id,discipline_name,discipline_level,
         create_time,update_time
     </sql>
 </mapper>

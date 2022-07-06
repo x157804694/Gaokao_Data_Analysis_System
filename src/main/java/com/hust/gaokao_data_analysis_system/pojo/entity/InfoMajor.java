@@ -20,9 +20,11 @@ public class InfoMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableId(value = "major_code")
+    @TableId(value = "major_code",type = IdType.AUTO)
     private Integer major_code;
 
+    @TableField(value = "major_id")
+    private String major_id;
     /**
      * 
      */
@@ -39,7 +41,7 @@ public class InfoMajor extends BasicClass implements Serializable {
      * 
      */
     @TableField(value = "major_subject")
-    private Integer major_subject;
+    private String major_subject;
 
     /**
      * 

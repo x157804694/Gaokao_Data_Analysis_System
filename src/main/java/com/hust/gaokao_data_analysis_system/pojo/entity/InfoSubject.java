@@ -20,9 +20,11 @@ public class InfoSubject extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableId(value = "subject_code")
+    @TableId(value = "subject_code", type = IdType.AUTO)
     private Integer subject_code;
 
+    @TableField(value = "subject_id")
+    private String subject_id;
     /**
      * 
      */
@@ -33,7 +35,7 @@ public class InfoSubject extends BasicClass implements Serializable {
      * 
      */
     @TableField(value = "subject_discipline")
-    private Integer subject_discipline;
+    private String subject_discipline;
 
     /**
      * 

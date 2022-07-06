@@ -10,6 +10,8 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/discipline")
 @Log4j
@@ -29,6 +31,13 @@ public class DisciplineController {
         Page pageDisciplines = disciplineService.page(pg);
         log.info("---分页查询所有门类" + pageDisciplines.getRecords());
         return ResponseResult.SUCCESS().setData(pageDisciplines);
+    }
+
+    @PostMapping("/listAll")
+    public ResponseResult getAllDiscipline() {
+        List<InfoDiscipline> disciplines = disciplineService.list();
+        log.info("---查询所有门类" + disciplines);
+        return ResponseResult.SUCCESS().setData(disciplines);
     }
 
     @PostMapping("/add")
