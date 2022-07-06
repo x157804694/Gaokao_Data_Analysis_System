@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoPc;
-import com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoPcServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +72,8 @@ public class PcController {
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
         Page pg = new Page<>(currentPage,pageSize);
-        Page pageUsers = pcService.page(pg);
-        log.info(pageUsers.getRecords()+"---分页查询所有用户");
-        return ResponseResult.SUCCESS().setData(pageUsers);
+        Page pagePcs = pcService.page(pg);
+        log.info(pagePcs.getRecords()+"---分页查询所有批次");
+        return ResponseResult.SUCCESS().setData(pagePcs);
     }
 }

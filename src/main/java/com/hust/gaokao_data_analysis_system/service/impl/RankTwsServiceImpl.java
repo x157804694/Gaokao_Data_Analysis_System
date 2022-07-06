@@ -1,9 +1,11 @@
 package com.hust.gaokao_data_analysis_system.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hust.gaokao_data_analysis_system.pojo.entity.RankTws;
 import com.hust.gaokao_data_analysis_system.service.RankTwsService;
 import com.hust.gaokao_data_analysis_system.mapper.RankTwsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +17,22 @@ import org.springframework.stereotype.Service;
 public class RankTwsServiceImpl extends ServiceImpl<RankTwsMapper, RankTws>
     implements RankTwsService{
 
+    private RankTwsMapper twsMapper;
+
+    @Autowired
+    public void setTwsMapper(RankTwsMapper twsMapper) {
+        this.twsMapper = twsMapper;
+    }
+
+    @Override
+    public RankTws findNewest(Integer tws_school) {
+        return twsMapper.findNewest(tws_school);
+    }
+
+    @Override
+    public Page<RankTws> findAll(Page<RankTws> page) {
+        return twsMapper.findAll(page);
+    }
 }
 
 
