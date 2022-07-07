@@ -10,6 +10,8 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pc")
 @Log4j
@@ -68,12 +70,24 @@ public class PcController {
     }
 
     @PostMapping("/list")
-    public ResponseResult getAllPc(@RequestBody PageRequest pageRequest){
+    public ResponseResult getPcOnePage(@RequestBody PageRequest pageRequest){
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
         Page pg = new Page<>(currentPage,pageSize);
         Page pagePcs = pcService.page(pg);
         log.info(pagePcs.getRecords()+"---分页查询所有批次");
         return ResponseResult.SUCCESS().setData(pagePcs);
+    }
+
+    @PostMapping("/listall")
+    public ResponseResult getAllPc(){
+        List<InfoPc> pcs = pcService.list();
+        if(!pcs.isEmpty()){
+            log.info(pcs+"---查询所有批次");
+            return ResponseResult.SUCCESS().setData(pcs);
+        }else {
+            log.info("---批次表无数据");
+            return ResponseResult.FAILED("---批次表无数据");
+        }
     }
 }

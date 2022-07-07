@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.entity.InfoPc;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoZslx;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoZslxServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/zslx")
@@ -74,5 +77,17 @@ public class ZslxController {
         Page pageZslxs = zslxService.page(pg);
         log.info(pageZslxs.getRecords()+"---分页查询所有招生类型");
         return ResponseResult.SUCCESS().setData(pageZslxs);
+    }
+
+    @PostMapping("/listall")
+    public ResponseResult getAllZslxs(){
+        List<InfoZslx> zslxes = zslxService.list();
+        if(!zslxes.isEmpty()){
+            log.info(zslxes+"---查询所有招生类型");
+            return ResponseResult.SUCCESS().setData(zslxes);
+        }else {
+            log.info("---招生类型表无数据");
+            return ResponseResult.FAILED("---招生类型表无数据");
+        }
     }
 }

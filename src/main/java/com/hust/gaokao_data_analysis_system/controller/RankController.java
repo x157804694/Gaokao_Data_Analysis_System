@@ -10,6 +10,8 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rank")
 @Log4j
@@ -109,6 +111,18 @@ public class RankController {
         Page pageQsRanks = qsService.findAll(pg);
         log.info("---查询Qs排名" + pageQsRanks);
         return ResponseResult.SUCCESS().setData(pageQsRanks);
+    }
+
+    @PostMapping("/qs/listall")
+    public ResponseResult getAllQss(){
+        List<RankQs> qss = qsService.list();
+        if(!qss.isEmpty()){
+            log.info(qss+"---查询所有Qs排名");
+            return ResponseResult.SUCCESS().setData(qss);
+        }else {
+            log.info("---Qs排名表无数据");
+            return ResponseResult.FAILED("---Qs排名表无数据");
+        }
     }
 
     @PostMapping("/qs/update")
@@ -211,6 +225,18 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageRkRanks);
     }
 
+    @PostMapping("/rk/listall")
+    public ResponseResult getAllRks(){
+        List<RankRk> rks = rkService.list();
+        if(!rks.isEmpty()){
+            log.info(rks+"---查询所有Rk排名");
+            return ResponseResult.SUCCESS().setData(rks);
+        }else {
+            log.info("---Rk排名表无数据");
+            return ResponseResult.FAILED("---Rk排名表无数据");
+        }
+    }
+
     @PostMapping("/rk/update")
     public ResponseResult updateRkRank(@RequestBody RankRk updateRk){
         boolean result = rkService.updateById(updateRk);
@@ -309,6 +335,18 @@ public class RankController {
         Page pageTwsRanks = twsService.findAll(pg);
         log.info("---查询Tws排名" + pageTwsRanks);
         return ResponseResult.SUCCESS().setData(pageTwsRanks);
+    }
+
+    @PostMapping("/tws/listall")
+    public ResponseResult getAllTwss(){
+        List<RankTws> twss = twsService.list();
+        if(!twss.isEmpty()){
+            log.info(twss+"---查询所有Tws排名");
+            return ResponseResult.SUCCESS().setData(twss);
+        }else {
+            log.info("---Tws排名表无数据");
+            return ResponseResult.FAILED("---Tws排名表无数据");
+        }
     }
 
     @PostMapping("/tws/update")
@@ -411,6 +449,18 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageUsRanks);
     }
 
+    @PostMapping("/us/listall")
+    public ResponseResult getAllUss(){
+        List<RankUs> uss = usService.list();
+        if(!uss.isEmpty()){
+            log.info(uss+"---查询所有Us排名");
+            return ResponseResult.SUCCESS().setData(uss);
+        }else {
+            log.info("---Us排名表无数据");
+            return ResponseResult.FAILED("---Us排名表无数据");
+        }
+    }
+
     @PostMapping("/us/update")
     public ResponseResult updateUsRank(@RequestBody RankUs updateUs){
         boolean result = usService.updateById(updateUs);
@@ -511,6 +561,18 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageWslRanks);
     }
 
+    @PostMapping("/wsl/listall")
+    public ResponseResult getAllWsls(){
+        List<RankWsl> wsls = wslService.list();
+        if(!wsls.isEmpty()){
+            log.info(wsls+"---查询所有Wsl排名");
+            return ResponseResult.SUCCESS().setData(wsls);
+        }else {
+            log.info("---Wsl排名表无数据");
+            return ResponseResult.FAILED("---Wsl排名表无数据");
+        }
+    }
+
     @PostMapping("/wsl/update")
     public ResponseResult updateWslRank(@RequestBody RankWsl updateWsl){
         boolean result = wslService.updateById(updateWsl);
@@ -609,6 +671,18 @@ public class RankController {
         Page pageXyhRanks = xyhService.findAll(pg);
         log.info("---查询Xyh排名" + pageXyhRanks);
         return ResponseResult.SUCCESS().setData(pageXyhRanks);
+    }
+
+    @PostMapping("/xyh/listall")
+    public ResponseResult getAllXyhs(){
+        List<RankXyh> xyhs = xyhService.list();
+        if(!xyhs.isEmpty()){
+            log.info(xyhs+"---查询所有Xyh排名");
+            return ResponseResult.SUCCESS().setData(xyhs);
+        }else {
+            log.info("---Xyh排名表无数据");
+            return ResponseResult.FAILED("---Xyh排名表无数据");
+        }
     }
 
     @PostMapping("/xyh/update")
