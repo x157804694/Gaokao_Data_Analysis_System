@@ -7,8 +7,7 @@
     <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor">
             <id property="school_major_code" column="school_major_code" jdbcType="INTEGER"/>
             <result property="school_major_school" column="school_major_school" jdbcType="INTEGER"/>
-            <result property="school_major_subject" column="school_major_subject" jdbcType="VARCHAR"/>
-            <result property="school_majort_major" column="school_majort_major" jdbcType="INTEGER"/>
+            <result property="school_major_major" column="school_major_major" jdbcType="VARCHAR"/>
             <result property="school_major_time" column="school_major_time" jdbcType="VARCHAR"/>
             <result property="school_major_cost" column="school_major_cost" jdbcType="VARCHAR"/>
             <result property="school_major_2_phd_flag" column="school_major_2_phd_flag" jdbcType="INTEGER"/>
@@ -19,9 +18,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        school_major_code,school_major_school,school_major_subject,
-        school_majort_major,school_major_time,school_major_cost,
-        school_major_2_phd_flag,school_major_master_flag,school_major_rank,
-        create_time,update_time
+        school_major_code,school_major_school,school_major_major,
+        school_major_time,school_major_cost,school_major_2_phd_flag,
+        school_major_master_flag,school_major_rank,create_time,
+        update_time
     </sql>
 </mapper>

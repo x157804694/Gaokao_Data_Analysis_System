@@ -9,6 +9,8 @@ import com.hust.gaokao_data_analysis_system.mapper.SchoolDisciplineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_school_discipline】的数据库操作Service实现
@@ -26,8 +28,13 @@ public class SchoolDisciplineServiceImpl extends ServiceImpl<SchoolDisciplineMap
     }
 
     @Override
-    public Page<SchoolDisciplineVo> findAll(Page<SchoolDisciplineVo> page) {
-        return schoolDisciplineMapper.findAll(page);
+    public Page<SchoolDisciplineVo> findAllByPage(Page<SchoolDisciplineVo> page) {
+        return schoolDisciplineMapper.findAllByPage(page);
+    }
+
+    @Override
+    public List<SchoolDisciplineVo> findAll(long schoolId) {
+        return schoolDisciplineMapper.findAll(schoolId);
     }
 }
 

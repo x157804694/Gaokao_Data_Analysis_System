@@ -33,7 +33,7 @@ public class SchoolDiscipline extends BasicClass implements Serializable {
      * 
      */
     @TableField(value = "school_discipline_discipline")
-    private Integer school_discipline_discipline;
+    private String school_discipline_discipline;
 
     /**
      * 

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 /**
 * @author XDL
 * @description 针对表【t_school_major】的数据库操作Service
-* @createDate 2022-06-27 11:16:06
+* @createDate 2022-07-08 00:44:50
 */
 public interface SchoolMajorService extends IService<SchoolMajor> {
 

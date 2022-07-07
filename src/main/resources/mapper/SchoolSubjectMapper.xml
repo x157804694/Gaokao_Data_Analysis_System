@@ -7,6 +7,7 @@
     <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.SchoolSubject">
             <id property="school_subject_code" column="school_subject_code" jdbcType="INTEGER"/>
             <result property="school_subject_school" column="school_subject_school" jdbcType="INTEGER"/>
+            <result property="school_subject_subject" column="school_subject_subject" jdbcType="VARCHAR"/>
             <result property="school_subject_best_flag" column="school_subject_best_flag" jdbcType="INTEGER"/>
             <result property="school_subject_1_phd_flag" column="school_subject_1_phd_flag" jdbcType="INTEGER"/>
             <result property="school_subject_1_master_flag" column="school_subject_1_master_flag" jdbcType="INTEGER"/>
@@ -17,8 +18,17 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        school_subject_code,school_subject_school,school_subject_best_flag,
-        school_subject_1_phd_flag,school_subject_1_master_flag,school_subject_dual_flag,
-        school_subject_rank,create_time,update_time
+        school_subject_code,school_subject_school,school_subject_subject,
+        school_subject_best_flag,school_subject_1_phd_flag,school_subject_1_master_flag,
+        school_subject_dual_flag,school_subject_rank,create_time,
+        update_time
     </sql>
+    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo">
+        SELECT * FROM t_school_subject LEFT JOIN t_info_school ON t_school_subject.school_subject_school = t_info_school.school_id
+            LEFT JOIN t_info_subject ON t_school_subject.school_subject_subject = t_info_subject.subject_id
+    </select>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo">
+        SELECT * FROM t_school_subject LEFT JOIN t_info_school ON t_school_subject.school_subject_school = t_info_school.school_id
+            LEFT JOIN t_info_subject ON t_school_subject.school_subject_subject = t_info_subject.subject_id WHERE t_school_subject.school_subject_school = #{schoolId}
+    </select>
 </mapper>

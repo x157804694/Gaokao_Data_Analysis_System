@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDisciplineVo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_school_discipline】的数据库操作Mapper
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface SchoolDisciplineMapper extends BaseMapper<SchoolDiscipline> {
-    Page<SchoolDisciplineVo> findAll(Page<SchoolDisciplineVo> page);
+    Page<SchoolDisciplineVo> findAllByPage(Page<SchoolDisciplineVo> page);
+    List<SchoolDisciplineVo> findAll(long schoolId);
 }
 
 

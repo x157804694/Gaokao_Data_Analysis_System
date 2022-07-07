@@ -32,6 +32,12 @@ public class SchoolSubject extends BasicClass implements Serializable {
     /**
      * 
      */
+    @TableField(value = "school_subject_subject")
+    private String school_subject_subject;
+
+    /**
+     * 
+     */
     @TableField(value = "school_subject_best_flag")
     private Integer school_subject_best_flag;
 
@@ -59,9 +65,6 @@ public class SchoolSubject extends BasicClass implements Serializable {
     @TableField(value = "school_subject_rank")
     private String school_subject_rank;
 
-    /**
-     * 
-     */
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

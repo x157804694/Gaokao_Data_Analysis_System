@@ -20,7 +20,7 @@ public class SchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableId(value = "school_major_code")
+    @TableId(value = "school_major_code", type = IdType.AUTO)
     private Integer school_major_code;
 
     /**
@@ -32,14 +32,8 @@ public class SchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableField(value = "school_major_subject")
-    private String school_major_subject;
-
-    /**
-     * 
-     */
-    @TableField(value = "school_majort_major")
-    private Integer school_majort_major;
+    @TableField(value = "school_major_major")
+    private String school_major_major;
 
     /**
      * 
@@ -70,10 +64,6 @@ public class SchoolMajor extends BasicClass implements Serializable {
      */
     @TableField(value = "school_major_rank")
     private Integer school_major_rank;
-
-    /**
-     * 
-     */
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
