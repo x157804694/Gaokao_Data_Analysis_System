@@ -16,4 +16,8 @@
         school_discipline_code,school_discipline_school,school_discipline_discipline,
         create_time,update_time
     </sql>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDisciplineVo">
+        SELECT * FROM t_school_discipline LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id
+            LEFT JOIN t_info_discipline ON t_school_discipline.school_discipline_discipline = t_info_discipline.discipline_id
+    </select>
 </mapper>

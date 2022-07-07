@@ -31,11 +31,6 @@ public class InfoMajor extends BasicClass implements Serializable {
     @TableField(value = "major_name")
     private String major_name;
 
-    /**
-     * 
-     */
-    @TableField(value = "major_year")
-    private String major_year;
 
     /**
      * 
