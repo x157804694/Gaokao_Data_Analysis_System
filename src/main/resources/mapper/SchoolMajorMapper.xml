@@ -10,8 +10,9 @@
             <result property="school_major_major" column="school_major_major" jdbcType="VARCHAR"/>
             <result property="school_major_time" column="school_major_time" jdbcType="VARCHAR"/>
             <result property="school_major_cost" column="school_major_cost" jdbcType="VARCHAR"/>
+            <result property="school_major_best_flag" column="school_major_best_flag" jdbcType="INTEGER"/>
             <result property="school_major_2_phd_flag" column="school_major_2_phd_flag" jdbcType="INTEGER"/>
-            <result property="school_major_master_flag" column="school_major_master_flag" jdbcType="INTEGER"/>
+            <result property="school_major_2_master_flag" column="school_major_master_flag" jdbcType="INTEGER"/>
             <result property="school_major_rank" column="school_major_rank" jdbcType="INTEGER"/>
             <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
@@ -23,4 +24,12 @@
         school_major_master_flag,school_major_rank,create_time,
         update_time
     </sql>
+    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo">
+        SELECT * FROM t_school_major LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id
+                                       LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id
+    </select>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo">
+        SELECT * FROM t_school_major LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id
+                                     LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id WHERE t_school_major.school_major_school = #{schoolId}
+    </select>
 </mapper>

@@ -36,6 +36,13 @@ public class SchoolMajor extends BasicClass implements Serializable {
     private String school_major_major;
 
     /**
+     *
+     */
+
+    @TableField(value = "school_major_name")
+    private String school_major_name;
+
+    /**
      * 
      */
     @TableField(value = "school_major_time")
@@ -48,6 +55,12 @@ public class SchoolMajor extends BasicClass implements Serializable {
     private String school_major_cost;
 
     /**
+     *
+     */
+    @TableField(value = "school_major_best_flag")
+    private Integer school_major_best_flag;
+
+    /**
      * 
      */
     @TableField(value = "school_major_2_phd_flag")
@@ -56,8 +69,8 @@ public class SchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableField(value = "school_major_master_flag")
-    private Integer school_major_master_flag;
+    @TableField(value = "school_major_2_master_flag")
+    private Integer school_major_2_master_flag;
 
     /**
      * 

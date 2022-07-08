@@ -1,7 +1,11 @@
 package com.hust.gaokao_data_analysis_system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo;
+
+import java.util.List;
 
 /**
 * @author XDL
@@ -9,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-07-08 00:44:50
 */
 public interface SchoolMajorService extends IService<SchoolMajor> {
-
+    Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page);
+    List<SchoolMajorVo> findAll(long schoolId);
 }
