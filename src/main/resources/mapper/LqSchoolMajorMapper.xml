@@ -14,7 +14,7 @@
             <result property="lq_school_major_min_score" column="lq_school_major_min_score" jdbcType="INTEGER"/>
             <result property="lq_school_major_high_rank" column="lq_school_major_high_rank" jdbcType="INTEGER"/>
             <result property="lq_school_major_low_rank" column="lq_school_major_low_rank" jdbcType="INTEGER"/>
-            <result property="lq_school_major_p_line" column="lq_school_major_p_line" jdbcType="INTEGER"/>
+            <result property="lq_school_major_p_score" column="lq_school_major_p_score" jdbcType="INTEGER"/>
             <result property="lq_school_major_average_score" column="lq_school_major_average_score" jdbcType="INTEGER"/>
             <result property="lq_school_major_zslx" column="lq_school_major_zslx" jdbcType="INTEGER"/>
             <result property="lq_school_major_pc" column="lq_school_major_pc" jdbcType="INTEGER"/>
@@ -26,7 +26,7 @@
         lq_school_major_code,lq_school_major_school,lq_school_major_major,
         lq_school_major_year,lq_school_major_province,lq_school_major_max_score,
         lq_school_major_min_score,lq_school_major_high_rank,lq_school_major_low_rank,
-        lq_school_major_p_line,lq_school_major_average_score,lq_school_major_zslx,
+        lq_school_major_p_score,lq_school_major_average_score,lq_school_major_zslx,
         lq_school_major_pc,create_time,update_time
     </sql>
 </mapper>

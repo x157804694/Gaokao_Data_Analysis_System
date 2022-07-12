@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.InfoProvinceControlMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.InfoProvinceControl">
+            <id property="province_control_code" column="province_control_code" jdbcType="INTEGER"/>
+            <result property="province_control_province" column="province_control_province" jdbcType="VARCHAR"/>
+            <result property="province_control_zslx" column="province_control_zslx" jdbcType="VARCHAR"/>
+            <result property="province_control_pc" column="province_control_pc" jdbcType="VARCHAR"/>
+            <result property="province_control_year" column="province_control_year" jdbcType="VARCHAR"/>
+            <result property="province_control_score" column="province_control_score" jdbcType="INTEGER"/>
+            <result property="province_control_majorScore" column="province_control_majorScore" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        province_control_code,province_control_province,province_control_zslx,
+        province_control_pc,province_control_year,province_control_score,
+        province_control_majorScore
+    </sql>
+</mapper>

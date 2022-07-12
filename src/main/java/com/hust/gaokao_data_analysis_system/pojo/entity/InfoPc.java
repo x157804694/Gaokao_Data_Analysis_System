@@ -20,7 +20,7 @@ public class InfoPc extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableId(value = "pc_code")
+    @TableId(value = "pc_code", type = IdType.AUTO)
     private Integer pc_code;
 
     /**

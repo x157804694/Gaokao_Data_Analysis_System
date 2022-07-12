@@ -1,0 +1,22 @@
+package com.hust.gaokao_data_analysis_system.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hust.gaokao_data_analysis_system.pojo.entity.InfoProvinceControl;
+import com.hust.gaokao_data_analysis_system.service.InfoProvinceControlService;
+import com.hust.gaokao_data_analysis_system.mapper.InfoProvinceControlMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author XDL
+* @description 针对表【t_info_province_control】的数据库操作Service实现
+* @createDate 2022-07-11 18:49:15
+*/
+@Service
+public class InfoProvinceControlServiceImpl extends ServiceImpl<InfoProvinceControlMapper, InfoProvinceControl>
+    implements InfoProvinceControlService{
+
+}
+
+
+
+

@@ -9,6 +9,7 @@ import com.hust.gaokao_data_analysis_system.common.ResponseResult;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoSchool;
 import com.hust.gaokao_data_analysis_system.pojo.dto.SchoolInfoQueryDTO;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoSchoolServiceImpl;
+import io.swagger.models.auth.In;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -62,11 +63,20 @@ public class SchoolInfoController {
         // 移除分页参数
         schoolInfoVoMap.remove("pageSize");
         schoolInfoVoMap.remove("currentPage");
+        if (Integer.parseInt(schoolInfoVoMap.get("school_dual"))==2){
+            schoolInfoVoMap.remove("school_dual");
+        }
+        if (Integer.parseInt(schoolInfoVoMap.get("school_qj"))==2){
+            schoolInfoVoMap.remove("school_qj");
+        }
+        if (Integer.parseInt(schoolInfoVoMap.get("school_sg"))==2){
+            schoolInfoVoMap.remove("school_sg");
+        }
+        System.out.println("-----查询条件"+schoolInfoVoMap);
         // 筛选
         qw.allEq(schoolInfoVoMap,false);
         Page pageSchools = schoolService.page(pg,qw);
-        log.info(schoolInfoQueryDTO + "---筛选条件");
-        log.info(pageSchools.getRecords() + "---根据各类条件，分页查询所有学校信息");
+        log.info("---根据各类条件，分页查询所有学校信息" + pageSchools.getRecords());
         return ResponseResult.SUCCESS().setData(pageSchools);
     }
 

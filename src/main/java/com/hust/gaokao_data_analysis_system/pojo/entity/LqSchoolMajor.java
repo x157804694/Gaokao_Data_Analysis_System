@@ -75,7 +75,7 @@ public class LqSchoolMajor extends BasicClass implements Serializable {
      * 
      */
     @TableField(value = "lq_school_major_p_line")
-    private Integer lq_school_major_p_line;
+    private Integer lq_school_major_p_score;
 
     /**
      * 

@@ -20,7 +20,7 @@ public class InfoZslx extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableId(value = "zslx_code")
+    @TableId(value = "zslx_code",type = IdType.AUTO)
     private Integer zslx_code;
 
     /**
