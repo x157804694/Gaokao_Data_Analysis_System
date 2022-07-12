@@ -37,7 +37,7 @@ public class ZsSchoolMajorController {
     @RequestMapping("/listAll/{schoolId}")
     public ResponseResult getAllZsSchoolMajorBySchool(@PathVariable("schoolId") long schoolId){
         List<ZsSchoolMajorVo> zsSchoolMajorVoList = zsSchoolMajorService.findAll(schoolId);
-        log.info("---查询所有学校专业招生计划"+zsSchoolMajorVoList);
+        log.info("---查询某学校专业招生计划"+zsSchoolMajorVoList);
         return ResponseResult.SUCCESS().setData(zsSchoolMajorVoList);
     }
 
@@ -47,6 +47,7 @@ public class ZsSchoolMajorController {
         qw.eq("zs_school_major_school", addZsSchoolMajor.getZs_school_major_school());
         qw.eq("zs_school_major_major", addZsSchoolMajor.getZs_school_major_major());
         qw.eq("zs_school_major_province", addZsSchoolMajor.getZs_school_major_province());
+        qw.eq("zs_school_major_year", addZsSchoolMajor.getZs_school_major_year());
         ZsSchoolMajor zsSchoolMajor = zsSchoolMajorService.getOne(qw);
         if (zsSchoolMajor==null){
             boolean result = zsSchoolMajorService.save(addZsSchoolMajor);
@@ -60,8 +61,8 @@ public class ZsSchoolMajorController {
             }
         }
         else {
-            log.info("---该学校在当前省份针对此专业已存在招生计划");
-            return ResponseResult.FAILED("该学校在当前省份针对此专业已存在招生计划,请勿重复添加");
+            log.info("---该学校在当前年份、当前省份针对此专业已存在招生计划");
+            return ResponseResult.FAILED("该学校在当前年份、当前省份针对此专业已存在招生计划,请勿重复添加");
         }
     }
 

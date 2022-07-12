@@ -20,7 +20,7 @@ public class LqSchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableId(value = "lq_school_major_code")
+    @TableId(value = "lq_school_major_code", type = IdType.AUTO)
     private Integer lq_school_major_code;
 
     /**
@@ -74,7 +74,7 @@ public class LqSchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableField(value = "lq_school_major_p_line")
+    @TableField(value = "lq_school_major_p_score")
     private Integer lq_school_major_p_score;
 
     /**
