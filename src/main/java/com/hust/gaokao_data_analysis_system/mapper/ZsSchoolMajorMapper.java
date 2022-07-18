@@ -16,7 +16,7 @@ import java.util.List;
 */
 @Repository
 public interface ZsSchoolMajorMapper extends BaseMapper<ZsSchoolMajor> {
-    Page<ZsSchoolMajorVo> findAllByPage(Page<ZsSchoolMajorVo> page);
+    Page<ZsSchoolMajorVo> findAllByPage(Page<ZsSchoolMajorVo> page,int schoolId,int provinceCode,String year,int zslxCode,int pcCode);
     List<ZsSchoolMajorVo> findAll(long schoolId);
 }
 

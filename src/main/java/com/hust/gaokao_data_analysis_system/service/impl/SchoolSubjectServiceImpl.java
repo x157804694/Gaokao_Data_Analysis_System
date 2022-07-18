@@ -28,13 +28,13 @@ public class SchoolSubjectServiceImpl extends ServiceImpl<SchoolSubjectMapper, S
     }
 
     @Override
-    public Page<SchoolSubjectVo> findAllByPage(Page<SchoolSubjectVo> page) {
-        return schoolSubjectMapper.findAllByPage(page);
+    public Page<SchoolSubjectVo> findAllByPage(Page<SchoolSubjectVo> page, long schoolId, String disciplineId) {
+        return schoolSubjectMapper.findAllByPage(page, schoolId, disciplineId);
     }
 
     @Override
-    public List<SchoolSubjectVo> findAll(long schoolId) {
-        return schoolSubjectMapper.findAll(schoolId);
+    public List<SchoolSubjectVo> findAll(long schoolId, String disciplineId) {
+        return schoolSubjectMapper.findAll(schoolId, disciplineId);
     }
 }
 

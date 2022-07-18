@@ -25,8 +25,8 @@ public class PlanDualServiceImpl extends ServiceImpl<PlanDualMapper, PlanDual>
     }
 
     @Override
-    public Page<PlanDual> findAll(Page<PlanDual> page) {
-        return dualMapper.findAll(page);
+    public Page<PlanDual> findAll(Page<PlanDual> page, String year) {
+        return dualMapper.findAll(page, year);
     }
 }
 

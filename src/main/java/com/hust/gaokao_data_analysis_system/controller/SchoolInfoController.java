@@ -7,9 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoSchool;
-import com.hust.gaokao_data_analysis_system.pojo.dto.SchoolInfoQueryDTO;
+import com.hust.gaokao_data_analysis_system.pojo.dto.SchoolInfoDTO;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoSchoolServiceImpl;
-import io.swagger.models.auth.In;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,28 +48,42 @@ public class SchoolInfoController {
     }
 
     @PostMapping("/list")
-    public ResponseResult getAllSchoolByCols(@RequestBody SchoolInfoQueryDTO schoolInfoQueryDTO) {
+    public ResponseResult getAllSchoolByCols(@RequestBody SchoolInfoDTO schoolInfoDTO) {
         // 获取页面参数
-        int currentPage = schoolInfoQueryDTO.getCurrentPage();
-        int pageSize = schoolInfoQueryDTO.getPageSize();
+        int currentPage = schoolInfoDTO.getCurrentPage();
+        int pageSize = schoolInfoDTO.getPageSize();
         //分页
         Page pg = new Page<>(currentPage, pageSize);
         QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
         // 参数对象转为map
         Map<String, String> schoolInfoVoMap = new HashMap<String, String>();
-        schoolInfoVoMap = JSON.parseObject(JSON.toJSONString(schoolInfoQueryDTO), new TypeReference<Map<String, String>>() {
+        schoolInfoVoMap = JSON.parseObject(JSON.toJSONString(schoolInfoDTO), new TypeReference<Map<String, String>>() {
         });
         // 移除分页参数
         schoolInfoVoMap.remove("pageSize");
         schoolInfoVoMap.remove("currentPage");
-        if (Integer.parseInt(schoolInfoVoMap.get("school_dual"))==2){
+        // 转换筛选条件：双一流
+        if (schoolInfoDTO.getSchool_dual()==2){
             schoolInfoVoMap.remove("school_dual");
         }
-        if (Integer.parseInt(schoolInfoVoMap.get("school_qj"))==2){
+        if (schoolInfoDTO.getSchool_qj()==2){
             schoolInfoVoMap.remove("school_qj");
         }
-        if (Integer.parseInt(schoolInfoVoMap.get("school_sg"))==2){
+        if (schoolInfoDTO.getSchool_sg()==2){
             schoolInfoVoMap.remove("school_sg");
+        }
+        // 转换筛选条件：（学校类型：所有：0 双非：1 211：2 985：3）
+        schoolInfoVoMap.remove("school_class");
+        int schoolClass = schoolInfoDTO.getSchool_class();
+        if (schoolClass==1){
+            schoolInfoVoMap.put("school_211", "0");
+            schoolInfoVoMap.put("school_985", "0");
+        }
+        else if (schoolClass==2){
+            schoolInfoVoMap.put("school_211", "1");
+        }
+        else if (schoolClass==3){
+            schoolInfoVoMap.put("school_985", "1");
         }
         System.out.println("-----查询条件"+schoolInfoVoMap);
         // 筛选
@@ -82,9 +95,10 @@ public class SchoolInfoController {
 
     @PostMapping("/add")
     public ResponseResult addSchool(@RequestBody InfoSchool addSchool) {
-        // 判断是否存在同名
+        // 判断是否存在重复的学校名和id
         QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
         qw.eq("school_id", addSchool.getSchool_id());
+        qw.eq("school_name", addSchool.getSchool_name());
         InfoSchool school = schoolService.getOne(qw);
         if (school == null) {
             boolean result = schoolService.save(addSchool);
@@ -96,8 +110,21 @@ public class SchoolInfoController {
                 return ResponseResult.FAILED("新增学校失败");
             }
         } else {
-            log.info(addSchool + "---学校id已存在");
-            return ResponseResult.FAILED("学校id已存在，请勿重复添加");
+            log.info(addSchool + "---同名同id学校已存在");
+            return ResponseResult.FAILED("同名同id学校已存在，请勿重复添加");
+        }
+    }
+
+    @PostMapping("/addBatch")
+    public ResponseResult addSchoolOnBatch(@RequestBody List<InfoSchool> schoolList){
+        int result = schoolService.addBatch(schoolList);
+        if (result>0){
+            log.info("---批量新增学校成功"+schoolList);
+            return ResponseResult.SUCCESS();
+        }
+        else {
+            log.info("---批量新增学校失败"+schoolList);
+            return ResponseResult.FAILED("批量新增学校失败");
         }
     }
 
@@ -105,10 +132,10 @@ public class SchoolInfoController {
     public ResponseResult updateSchool(@RequestBody InfoSchool updateSchool) {
         boolean result = schoolService.updateById(updateSchool);
         if (result) {
-            log.info(updateSchool + "---修改学校信息成功");
+            log.info("---修改学校信息成功"+ updateSchool);
             return ResponseResult.SUCCESS().setData(updateSchool);
         } else {
-            log.info(updateSchool + "---修改学校信息失败");
+            log.info("---修改学校信息失败"+ updateSchool);
             return ResponseResult.FAILED("修改学校信息失败");
         }
     }
@@ -117,11 +144,11 @@ public class SchoolInfoController {
     public ResponseResult deleteSchool(@PathVariable("schoolCode") long schoolCode) {
         boolean result = schoolService.removeById(schoolCode);
         if (result) {
-            log.info("学校：" + schoolCode + "---删除成功");
+            log.info("---删除学校信息成功：" + schoolCode);
             return ResponseResult.SUCCESS();
         } else {
-            log.info("学校：" + schoolCode + "---删除失败");
-            return ResponseResult.FAILED("修改学校信息失败");
+            log.info("---删除学校信息失败：" + schoolCode);
+            return ResponseResult.FAILED("删除学校信息失败");
         }
     }
 

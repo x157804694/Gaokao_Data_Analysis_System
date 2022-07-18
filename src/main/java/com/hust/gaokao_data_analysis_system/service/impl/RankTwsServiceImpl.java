@@ -30,8 +30,8 @@ public class RankTwsServiceImpl extends ServiceImpl<RankTwsMapper, RankTws>
     }
 
     @Override
-    public Page<RankTws> findAll(Page<RankTws> page) {
-        return twsMapper.findAll(page);
+    public Page<RankTws> findAll(Page<RankTws> page, String year) {
+        return twsMapper.findAll(page,year);
     }
 }
 

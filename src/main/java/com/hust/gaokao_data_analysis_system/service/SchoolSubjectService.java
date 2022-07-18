@@ -13,6 +13,6 @@ import java.util.List;
 * @createDate 2022-07-07 17:30:04
 */
 public interface SchoolSubjectService extends IService<SchoolSubject> {
-    Page<SchoolSubjectVo> findAllByPage(Page<SchoolSubjectVo> page);
-    List<SchoolSubjectVo> findAll(long schoolId);
+    Page<SchoolSubjectVo> findAllByPage(Page<SchoolSubjectVo> page, long schoolId, String disciplineId);
+    List<SchoolSubjectVo> findAll(long schoolId, String disciplineId);
 }

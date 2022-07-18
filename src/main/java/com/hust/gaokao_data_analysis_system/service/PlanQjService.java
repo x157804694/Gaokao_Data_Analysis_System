@@ -10,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-06-27 11:16:06
 */
 public interface PlanQjService extends IService<PlanQj> {
-    Page<PlanQj> findAll(Page<PlanQj> page);
+    Page<PlanQj> findAll(Page<PlanQj> page, String year);
 }

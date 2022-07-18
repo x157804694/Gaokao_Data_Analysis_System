@@ -14,5 +14,5 @@ public interface RankUsService extends IService<RankUs> {
 
     RankUs findNewest(Integer us_school);
 
-    Page<RankUs> findAll(Page<RankUs> page);
+    Page<RankUs> findAll(Page<RankUs> page, String year);
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.SchoolSubjectDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolSubject;
 import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo;
 import com.hust.gaokao_data_analysis_system.service.impl.SchoolSubjectServiceImpl;
@@ -28,19 +29,27 @@ public class SchoolSubjectController {
     }
 
     @RequestMapping("/list")
-    public ResponseResult getAllSchoolSubjectByPage(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllSchoolSubjectByPage(@RequestBody SchoolSubjectDTO schoolSubjectDTO) {
+        int currentPage = schoolSubjectDTO.getCurrentPage();
+        int pageSize = schoolSubjectDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pageSchoolSubjects = schoolSubjectService.findAllByPage(pg);
-        log.info("---分页查询所有学校一级学科" + pageSchoolSubjects.getRecords());
+        System.out.println("---查询条件"+schoolSubjectDTO);
+        Page pageSchoolSubjects = schoolSubjectService.findAllByPage(pg, schoolSubjectDTO.getSchool_id(), schoolSubjectDTO.getDiscipline_id());
+        log.info("---根据各类条件，分页查询所有学校一级学科" + pageSchoolSubjects.getRecords());
         return ResponseResult.SUCCESS().setData(pageSchoolSubjects);
     }
 
     @RequestMapping("/listAll/{schoolId}")
     public ResponseResult getAllSchoolSubjectBySchoolId(@PathVariable("schoolId") long schoolId) {
-        List<SchoolSubjectVo> schoolSubjectVoList = schoolSubjectService.findAll(schoolId);
+        List<SchoolSubjectVo> schoolSubjectVoList = schoolSubjectService.findAll(schoolId, null);
         log.info("---查询该学校所有一级学科" + schoolSubjectVoList);
+        return ResponseResult.SUCCESS().setData(schoolSubjectVoList);
+    }
+
+    @RequestMapping("/listAll/{schoolId}/{disciplineId}")
+    public ResponseResult getAllSchoolSubjectBySchoolId(@PathVariable("schoolId") long schoolId,@PathVariable("disciplineId") String disciplineId) {
+        List<SchoolSubjectVo> schoolSubjectVoList = schoolSubjectService.findAll(schoolId, disciplineId);
+        log.info("---查询该学校某门类下所有一级学科" + schoolSubjectVoList);
         return ResponseResult.SUCCESS().setData(schoolSubjectVoList);
     }
 

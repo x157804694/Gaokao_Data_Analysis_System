@@ -17,4 +17,16 @@
         subject_code,subject_id,subject_name,subject_discipline,
         create_time,update_time
     </sql>
+    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SubjectVo">
+        select * from t_info_subject
+        left join t_info_discipline on t_info_subject.subject_discipline = t_info_discipline.discipline_id
+        <where>
+            <if test="disciplineLevel!=null">
+                t_info_discipline.discipline_level = #{disciplineLevel}
+            </if>
+            <if test="disciplineId!=null">
+                and t_info_subject.subject_discipline = #{disciplineId}
+            </if>
+        </where>
+    </select>
 </mapper>

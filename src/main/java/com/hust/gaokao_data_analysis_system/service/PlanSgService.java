@@ -10,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-06-27 11:16:06
 */
 public interface PlanSgService extends IService<PlanSg> {
-    Page<PlanSg> findAll(Page<PlanSg> page);
+    Page<PlanSg> findAll(Page<PlanSg> page,String year);
 }

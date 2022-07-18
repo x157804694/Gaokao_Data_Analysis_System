@@ -19,4 +19,7 @@
         province_control_pc,province_control_year,province_control_score,
         province_control_majorScore
     </sql>
+    <select id="getYearByProvince" resultType="java.lang.String">
+        select distinct province_control_year from t_info_province_control where province_control_province=#{provinceName}
+    </select>
 </mapper>

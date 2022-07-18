@@ -25,8 +25,8 @@ public class ZsSchoolMajorServiceImpl extends ServiceImpl<ZsSchoolMajorMapper, Z
         this.zsSchoolMajorMapper = zsSchoolMajorMapper;
     }
     @Override
-    public Page<ZsSchoolMajorVo> findAllByPage(Page<ZsSchoolMajorVo> page) {
-        return zsSchoolMajorMapper.findAllByPage(page);
+    public Page<ZsSchoolMajorVo> findAllByPage(Page<ZsSchoolMajorVo> page,int schoolId,int provinceCode,String year,int zslxCode,int pcCode) {
+        return zsSchoolMajorMapper.findAllByPage(page,schoolId,provinceCode,year,zslxCode,pcCode);
     }
 
     @Override

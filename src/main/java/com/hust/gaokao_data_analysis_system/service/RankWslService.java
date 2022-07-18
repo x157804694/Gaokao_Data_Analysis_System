@@ -14,5 +14,5 @@ public interface RankWslService extends IService<RankWsl> {
 
     RankWsl findNewest(Integer wsl_school);
 
-    Page<RankWsl> findAll(Page<RankWsl> page);
+    Page<RankWsl> findAll(Page<RankWsl> page, String year);
 }

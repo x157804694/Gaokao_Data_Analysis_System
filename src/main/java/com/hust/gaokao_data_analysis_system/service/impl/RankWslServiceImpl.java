@@ -30,8 +30,8 @@ public class RankWslServiceImpl extends ServiceImpl<RankWslMapper, RankWsl>
     }
 
     @Override
-    public Page<RankWsl> findAll(Page<RankWsl> page) {
-        return wslMapper.findAll(page);
+    public Page<RankWsl> findAll(Page<RankWsl> page, String year) {
+        return wslMapper.findAll(page, year);
     }
 }
 

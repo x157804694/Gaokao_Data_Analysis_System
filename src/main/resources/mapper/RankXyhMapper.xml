@@ -22,5 +22,10 @@
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.RankXyh">
         SELECT t1.*,t2.school_name as xyh_schoolName FROM t_rank_xyh as t1 LEFT JOIN t_info_school as t2 on t1.xyh_school = t2.school_id
+        <where>
+            <if test="year!=null">
+                t1.xyh_year = #{year}
+            </if>
+        </where>
     </select>
 </mapper>

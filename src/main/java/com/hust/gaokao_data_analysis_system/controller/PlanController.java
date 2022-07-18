@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.PlanDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoSchool;
 import com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual;
 import com.hust.gaokao_data_analysis_system.pojo.entity.PlanQj;
@@ -15,6 +16,8 @@ import com.hust.gaokao_data_analysis_system.service.impl.PlanSgServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/plan")
@@ -46,11 +49,12 @@ public class PlanController {
     }
 
     @PostMapping("/dual/list")
-    public ResponseResult getAllDualPlan(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllDualPlan(@RequestBody PlanDTO planDTO) {
+        int currentPage = planDTO.getCurrentPage();
+        int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pageDualPlans = dualService.findAll(pg);
+        String year = planDTO.getDual_year();
+        Page pageDualPlans = dualService.findAll(pg, year);
         log.info("---查询双一流高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
     }
@@ -79,11 +83,11 @@ public class PlanController {
                     return ResponseResult.FAILED("新增失败");
                 }
             } else {
-                log.info("---学校信息表中无此学校"+addDual);
+                log.info("---学校信息表中无此学校" + addDual);
                 return ResponseResult.FAILED("请先添加该学校基本信息，再进行操作");
             }
         } else {
-            log.info("---该学校已经存在此表中"+addDual);
+            log.info("---该学校已经存在此表中" + addDual);
             return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
         }
     }
@@ -104,7 +108,7 @@ public class PlanController {
     public ResponseResult deleteDualPlan(@PathVariable("dualCode") long dualCode) {
         // 根据code获取实例对象
         PlanDual dual = dualService.getById(dualCode);
-        if (dual!=null){
+        if (dual != null) {
             boolean result = dualService.removeById(dualCode);
             if (result) {
                 log.info("---删除双一流信息表记录成功");
@@ -120,19 +124,29 @@ public class PlanController {
                 log.info("---删除失败");
                 return ResponseResult.FAILED("删除失败");
             }
-        }
-        else {
+        } else {
             log.info("---双一流code不存在");
             return ResponseResult.FAILED("双一流code不存在");
         }
     }
 
+    @GetMapping("/dual/getAllYears")
+    public ResponseResult getDualAllYears() {
+        QueryWrapper<PlanDual> qw = new QueryWrapper<>();
+        qw.select("distinct dual_year");
+        List<Object> years = dualService.listObjs(qw);
+        log.info("---查询双一流计划所有年份" + years);
+        return ResponseResult.SUCCESS().setData(years);
+    }
+
+
     @PostMapping("/qj/list")
-    public ResponseResult getAllQjPlan(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllQjPlan(@RequestBody PlanDTO planDTO) {
+        int currentPage = planDTO.getCurrentPage();
+        int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pageDualPlans = qjService.findAll(pg);
+        String year = planDTO.getQj_year();
+        Page pageDualPlans = qjService.findAll(pg, year);
         log.info("---分页查询强基计划高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
     }
@@ -161,11 +175,11 @@ public class PlanController {
                     return ResponseResult.FAILED("新增失败");
                 }
             } else {
-                log.info("---学校信息表中无此学校"+addQj);
+                log.info("---学校信息表中无此学校" + addQj);
                 return ResponseResult.FAILED("请先添加该学校基本信息，再进行操作");
             }
         } else {
-            log.info("---该学校已经存在此表中"+addQj);
+            log.info("---该学校已经存在此表中" + addQj);
             return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
         }
     }
@@ -186,7 +200,7 @@ public class PlanController {
     public ResponseResult deleteQjPlan(@PathVariable("qjCode") long qjCode) {
         // 根据code获取实例对象
         PlanQj qj = qjService.getById(qjCode);
-        if (qj!=null){
+        if (qj != null) {
             boolean result = qjService.removeById(qjCode);
             if (result) {
                 log.info("---删除强基计划信息表记录成功");
@@ -202,19 +216,28 @@ public class PlanController {
                 log.info("---删除失败");
                 return ResponseResult.FAILED("删除失败");
             }
-        }
-        else {
+        } else {
             log.info("---强基计划code不存在");
             return ResponseResult.FAILED("强基计划code不存在");
         }
     }
 
+    @GetMapping("/qj/getAllYears")
+    public ResponseResult getQjAllYears() {
+        QueryWrapper<PlanQj> qw = new QueryWrapper<>();
+        qw.select("distinct qj_year");
+        List<Object> years = qjService.listObjs(qw);
+        log.info("---查询双一流计划所有年份" + years);
+        return ResponseResult.SUCCESS().setData(years);
+    }
+
     @PostMapping("/sg/list")
-    public ResponseResult getAllSgPlan(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllSgPlan(@RequestBody PlanDTO planDTO) {
+        int currentPage = planDTO.getCurrentPage();
+        int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pageDualPlans = sgService.findAll(pg);
+        String year = planDTO.getSg_year();
+        Page pageDualPlans = sgService.findAll(pg,year);
         log.info("---分页查询双高计划高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
     }
@@ -243,11 +266,11 @@ public class PlanController {
                     return ResponseResult.FAILED("新增失败");
                 }
             } else {
-                log.info("---学校信息表中无此学校"+addSg);
+                log.info("---学校信息表中无此学校" + addSg);
                 return ResponseResult.FAILED("请先添加该学校基本信息，再进行操作");
             }
         } else {
-            log.info("---该学校已经存在此表中"+addSg);
+            log.info("---该学校已经存在此表中" + addSg);
             return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
         }
     }
@@ -268,7 +291,7 @@ public class PlanController {
     public ResponseResult deleteSGPlan(@PathVariable("sgCode") long sgCode) {
         // 根据code获取实例对象
         PlanSg sg = sgService.getById(sgCode);
-        if (sg!=null){
+        if (sg != null) {
             boolean result = sgService.removeById(sgCode);
             if (result) {
                 log.info("---删除双高计划信息表记录成功");
@@ -284,10 +307,18 @@ public class PlanController {
                 log.info("---删除失败");
                 return ResponseResult.FAILED("删除失败");
             }
-        }
-        else {
+        } else {
             log.info("---双高计划code不存在");
             return ResponseResult.FAILED("双高计划code不存在");
         }
+    }
+
+    @GetMapping("/sg/getAllYears")
+    public ResponseResult getSgAllYears() {
+        QueryWrapper<PlanSg> qw = new QueryWrapper<>();
+        qw.select("distinct sg_year");
+        List<Object> years = sgService.listObjs(qw);
+        log.info("---查询双一流计划所有年份" + years);
+        return ResponseResult.SUCCESS().setData(years);
     }
 }

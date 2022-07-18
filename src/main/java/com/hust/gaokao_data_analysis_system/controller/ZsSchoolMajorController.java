@@ -2,8 +2,8 @@ package com.hust.gaokao_data_analysis_system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.ZsOrLQSchoolMajorDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.ZsSchoolMajor;
 import com.hust.gaokao_data_analysis_system.pojo.vo.ZsSchoolMajorVo;
 import com.hust.gaokao_data_analysis_system.service.impl.ZsSchoolMajorServiceImpl;
@@ -25,11 +25,18 @@ public class ZsSchoolMajorController {
     }
 
     @RequestMapping("/list")
-    public ResponseResult getAllZsSchoolMajorByPage(@RequestBody PageRequest pageRequest){
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllZsSchoolMajorByPage(@RequestBody ZsOrLQSchoolMajorDTO zsSchoolMajorDTO){
+        int currentPage = zsSchoolMajorDTO.getCurrentPage();
+        int pageSize = zsSchoolMajorDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page<ZsSchoolMajorVo> zsSchoolMajorVoPage = zsSchoolMajorService.findAllByPage(pg);
+        // 查询条件
+        int schoolId = zsSchoolMajorDTO.getSchool_id();
+        int provinceCode = zsSchoolMajorDTO.getProvince_code();
+        int zslxCode = zsSchoolMajorDTO.getZslx_code();
+        int pcCode = zsSchoolMajorDTO.getPc_code();
+        String year = zsSchoolMajorDTO.getYear();
+        // 分页查询
+        Page<ZsSchoolMajorVo> zsSchoolMajorVoPage = zsSchoolMajorService.findAllByPage(pg,schoolId,provinceCode,year,zslxCode,pcCode);
         log.info("---分页查询所有学校专业招生计划"+zsSchoolMajorVoPage.getRecords());
         return ResponseResult.SUCCESS().setData(zsSchoolMajorVoPage);
     }

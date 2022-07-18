@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.SubjectInfoDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoSubject;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoSubjectServiceImpl;
 import lombok.extern.log4j.Log4j;
@@ -33,16 +34,18 @@ public class SubjectController {
     }
 
     @PostMapping("/list")
-    public ResponseResult getAllSubjectByPage(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllSubjectByPage(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+        int currentPage = subjectInfoDTO.getCurrentPage();
+        int pageSize = subjectInfoDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pageSubjects = subjectService.page(pg);
-        log.info("---分页查询所有一级学科" + pageSubjects.getRecords());
+        String disciplineId = subjectInfoDTO.getDiscipline_id();
+        String disciplineLevel = subjectInfoDTO.getDiscipline_level();
+        Page pageSubjects = subjectService.findAllByPage(pg,disciplineId,disciplineLevel);
+        log.info("---分页查询一级学科" + pageSubjects.getRecords());
         return ResponseResult.SUCCESS().setData(pageSubjects);
     }
 
-    @PostMapping("/listAll/{disciplineId}")
+    @GetMapping("/listAll/{disciplineId}")
     public ResponseResult getAllSubjectByDiscipline(@PathVariable("disciplineId") String disciplineId) {
         List<InfoSubject> subjects = subjectService.list(new QueryWrapper<InfoSubject>().eq("subject_discipline",disciplineId));
         log.info("---根据学科门类查询所有一级学科" + subjects);
@@ -52,7 +55,7 @@ public class SubjectController {
     @PostMapping("/add")
     public ResponseResult addSubject(@RequestBody InfoSubject addSubject) {
         QueryWrapper<InfoSubject> qw = new QueryWrapper<>();
-        InfoSubject subject = subjectService.getOne(qw.eq("subject_name", addSubject.getSubject_name()));
+        InfoSubject subject = subjectService.getOne(qw.eq("subject_id", addSubject.getSubject_id()));
         if (subject == null) {
             boolean result = subjectService.save(addSubject);
             if (result) {
@@ -64,7 +67,7 @@ public class SubjectController {
             }
         } else {
             log.info("---存在同名一级学科，请勿重复添加");
-            return ResponseResult.FAILED("一级学科已存在，请勿重复添加！");
+            return ResponseResult.FAILED("一级学科id已存在，请勿重复添加！");
         }
     }
 

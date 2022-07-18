@@ -25,8 +25,8 @@ public class PlanQjServiceImpl extends ServiceImpl<PlanQjMapper, PlanQj>
     }
 
     @Override
-    public Page<PlanQj> findAll(Page<PlanQj> page) {
-        return qjMapper.findAll(page);
+    public Page<PlanQj> findAll(Page<PlanQj> page, String year) {
+        return qjMapper.findAll(page,year);
     }
 }
 

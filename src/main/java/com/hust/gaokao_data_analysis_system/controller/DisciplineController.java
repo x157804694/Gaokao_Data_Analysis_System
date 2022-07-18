@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.DisciplineInfoDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoDiscipline;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoDisciplineServiceImpl;
 import lombok.extern.log4j.Log4j;
@@ -24,27 +25,45 @@ public class DisciplineController {
     }
 
     @PostMapping("/list")
-    public ResponseResult getAllDisciplineByPage(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllDisciplineByPage(@RequestBody DisciplineInfoDTO disciplineInfoDTO) {
+        int currentPage = disciplineInfoDTO.getCurrentPage();
+        int pageSize = disciplineInfoDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pageDisciplines = disciplineService.page(pg);
-        log.info("---分页查询所有门类" + pageDisciplines.getRecords());
+        String discipline_level = disciplineInfoDTO.getDiscipline_level();
+        Page pageDisciplines = null;
+        if (discipline_level!=null){
+            QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
+            qw.eq("discipline_level", discipline_level);
+            pageDisciplines = disciplineService.page(pg,qw);
+            log.info("---根据等级分页查询所有门类" + pageDisciplines.getRecords());
+        }
+        else {
+            pageDisciplines = disciplineService.page(pg);
+            log.info("---分页查询所有门类" + pageDisciplines.getRecords());
+        }
         return ResponseResult.SUCCESS().setData(pageDisciplines);
     }
 
-    @PostMapping("/listAll")
+    @GetMapping ("/listAll")
     public ResponseResult getAllDiscipline() {
         List<InfoDiscipline> disciplines = disciplineService.list();
         log.info("---查询所有门类" + disciplines);
         return ResponseResult.SUCCESS().setData(disciplines);
     }
+    @GetMapping("/listAll/{discipline_level}")
+    public ResponseResult getAllDisciplineByLevel(@PathVariable("discipline_level") String discipline_level) {
+        QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
+        qw.eq("discipline_level", discipline_level);
+        List<InfoDiscipline> disciplines = disciplineService.list(qw);
+        log.info("---根据门类等级查询相应门类" + disciplines);
+        return ResponseResult.SUCCESS().setData(disciplines);
+    }
 
     @PostMapping("/add")
     public ResponseResult addDiscipline(@RequestBody InfoDiscipline addDiscipline){
-        // 判断是否存在同名门类
+        // 判断是否存在同编号门类
         QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
-        InfoDiscipline discipline = disciplineService.getOne(qw.eq("discipline_name",addDiscipline.getDiscipline_name()));
+        InfoDiscipline discipline = disciplineService.getOne(qw.eq("discipline_id",addDiscipline.getDiscipline_id()));
         if (discipline==null){
             boolean result = disciplineService.save(addDiscipline);
             if (result){
@@ -57,8 +76,8 @@ public class DisciplineController {
             }
         }
         else {
-            log.info("---存在同名学科门类"+addDiscipline);
-            return ResponseResult.FAILED("学科门类已存在，请勿重复添加！");
+            log.info("---存在同编号学科门类"+addDiscipline);
+            return ResponseResult.FAILED("学科门类id已存在，请勿重复添加！");
         }
     }
 
@@ -93,5 +112,14 @@ public class DisciplineController {
             log.info("---学科门类编号不存在");
             return ResponseResult.FAILED("学科门类编号不存在");
         }
+    }
+
+    @GetMapping("/getAllDisciplineLevel")
+    public ResponseResult getAllDisciplineLevel(){
+        QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
+        qw.select("distinct discipline_level");
+        List<Object> levelList = disciplineService.listObjs(qw);
+        log.info("---查询门类所有等级"+levelList);
+        return ResponseResult.SUCCESS().setData(levelList);
     }
 }

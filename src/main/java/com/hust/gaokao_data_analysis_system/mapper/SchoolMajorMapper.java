@@ -16,7 +16,7 @@ import java.util.List;
 */
 @Repository
 public interface SchoolMajorMapper extends BaseMapper<SchoolMajor> {
-    Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page);
+    Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page, long schoolId, String disciplineId, String subjectId);
     List<SchoolMajorVo> findAll(long SchoolId);
 }
 

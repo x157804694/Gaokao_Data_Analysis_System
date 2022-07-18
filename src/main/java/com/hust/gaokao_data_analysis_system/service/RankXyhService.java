@@ -14,5 +14,5 @@ public interface RankXyhService extends IService<RankXyh> {
 
     RankXyh findNewest(Integer xyh_school);
 
-    Page<RankXyh> findAll(Page<RankXyh> page);
+    Page<RankXyh> findAll(Page<RankXyh> page, String year);
 }

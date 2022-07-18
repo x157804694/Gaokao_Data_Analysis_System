@@ -6,17 +6,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
-import com.hust.gaokao_data_analysis_system.pojo.dto.InfoProvinceControlDTO;
+import com.hust.gaokao_data_analysis_system.pojo.dto.ProvinceControlDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoProvinceControl;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoProvinceControlServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,7 +39,7 @@ public class ProvinceControlController {
     }
 
     @RequestMapping("/list")
-    public ResponseResult getAllByCols(@RequestBody InfoProvinceControlDTO provinceControlDTO) {
+    public ResponseResult getAllByCols(@RequestBody ProvinceControlDTO provinceControlDTO) {
         int currentPage = provinceControlDTO.getCurrentPage();
         int pageSize = provinceControlDTO.getPageSize();
         // 分页
@@ -53,8 +51,6 @@ public class ProvinceControlController {
         });
         provinceControlMap.remove("pageSize");
         provinceControlMap.remove("currentPage");
-        provinceControlMap.remove("province_control_score");
-        provinceControlMap.remove("province_control_majorScore");
         System.out.println("-----查询条件" + provinceControlMap);
         // 筛选
         qw.allEq(provinceControlMap, false);
@@ -121,5 +117,12 @@ public class ProvinceControlController {
             log.info("---该省控线不存在");
             return ResponseResult.FAILED("该省控线不存在");
         }
+    }
+
+    @GetMapping("/getYearByProvince/{provinceName}")
+    public ResponseResult getYearByProvince(@PathVariable("provinceName") String provinceName){
+        List<String> yearList = provinceControlService.getYearByProvince(provinceName);
+        log.info("---根据省份查询省控线的年份"+yearList);
+        return ResponseResult.SUCCESS().setData(yearList);
     }
 }

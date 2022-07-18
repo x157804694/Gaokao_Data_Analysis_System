@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface RankTwsMapper extends BaseMapper<RankTws> {
 
     RankTws findNewest(@Param("tws_school") Integer tws_school);
-    Page<RankTws> findAll(Page<RankTws> page);
+    Page<RankTws> findAll(Page<RankTws> page, String year);
 }
 
 

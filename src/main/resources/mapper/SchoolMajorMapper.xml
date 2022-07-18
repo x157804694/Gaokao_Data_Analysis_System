@@ -25,11 +25,23 @@
         update_time
     </sql>
     <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo">
-        SELECT * FROM t_school_major LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id
-                                       LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id
+        SELECT * FROM t_school_major
+        LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id
+        LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id
+        LEFT JOIN t_info_subject ON t_info_major.major_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline ON  t_info_subject.subject_discipline = t_info_discipline.discipline_id
+        <where>
+            <if test="schoolId!=0">t_info_school.school_id = #{schoolId}</if>
+            <if test="disciplineId!=null">AND t_info_discipline.discipline_id = #{disciplineId}</if>
+            <if test="subjectId!=null">AND t_info_subject.subject_id = #{subjectId}</if>
+        </where>
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo">
-        SELECT * FROM t_school_major LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id
-                                     LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id WHERE t_school_major.school_major_school = #{schoolId}
+        SELECT * FROM t_school_major
+        LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id
+        LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id
+        LEFT JOIN t_info_subject ON t_info_major.major_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline ON  t_info_subject.subject_discipline = t_info_discipline.discipline_id
+        where school_major_school = #{schoolId}
     </select>
 </mapper>

@@ -16,7 +16,7 @@ import java.util.List;
 */
 @Repository
 public interface LqSchoolMajorMapper extends BaseMapper<LqSchoolMajor> {
-    Page<LqSchoolMajorVo> findAllByPage(Page<LqSchoolMajorVo> page);
+    Page<LqSchoolMajorVo> findAllByPage(Page<LqSchoolMajorVo> page,int schoolId,int provinceCode,String year,int zslxCode,int pcCode);
     List<LqSchoolMajorVo> findAll(long schoolId);
 }
 

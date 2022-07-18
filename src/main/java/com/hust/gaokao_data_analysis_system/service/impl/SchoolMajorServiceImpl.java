@@ -27,8 +27,8 @@ public class SchoolMajorServiceImpl extends ServiceImpl<SchoolMajorMapper, Schoo
     }
 
     @Override
-    public Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page) {
-        return schoolMajorMapper.findAllByPage(page);
+    public Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page, long schoolId, String disciplineId, String subjectId) {
+        return schoolMajorMapper.findAllByPage(page,schoolId,disciplineId,subjectId);
     }
 
     @Override

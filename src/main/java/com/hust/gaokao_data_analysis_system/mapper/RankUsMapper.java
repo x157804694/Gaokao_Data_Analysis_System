@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RankUsMapper extends BaseMapper<RankUs> {
     RankUs findNewest(@Param("us_school") Integer us_school);
-    Page<RankUs> findAll(Page<RankUs> page);
+    Page<RankUs> findAll(Page<RankUs> page, String year);
 }
 
 

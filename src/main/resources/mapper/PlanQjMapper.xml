@@ -18,5 +18,10 @@
     </sql>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanQj">
         SELECT t1.*,t2.school_name as qj_schoolName FROM t_plan_qj as t1 LEFT JOIN t_info_school as t2 on t1.qj_school = t2.school_id
+        <where>
+            <if test="year!=null">
+                t1.qj_year = #{year}
+            </if>
+        </where>
     </select>
 </mapper>

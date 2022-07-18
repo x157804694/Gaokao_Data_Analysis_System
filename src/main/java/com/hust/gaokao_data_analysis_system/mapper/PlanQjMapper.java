@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface PlanQjMapper extends BaseMapper<PlanQj> {
-    Page<PlanQj> findAll(Page<PlanQj> page);
+    Page<PlanQj> findAll(Page<PlanQj> page, String year);
 }
 
 

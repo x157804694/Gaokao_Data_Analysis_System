@@ -25,8 +25,8 @@ public class LqSchoolMajorServiceImpl extends ServiceImpl<LqSchoolMajorMapper, L
         this.lqSchoolMajorMapper = lqSchoolMajorMapper;
     }
     @Override
-    public Page<LqSchoolMajorVo> findAllByPage(Page<LqSchoolMajorVo> page) {
-        return lqSchoolMajorMapper.findAllByPage(page);
+    public Page<LqSchoolMajorVo> findAllByPage(Page<LqSchoolMajorVo> page,int schoolId,int provinceCode,String year,int zslxCode,int pcCode) {
+        return lqSchoolMajorMapper.findAllByPage(page, schoolId, provinceCode, year, zslxCode, pcCode);
     }
 
     @Override

@@ -79,13 +79,24 @@ public class GeoController {
 
     @PostMapping("/region/update")
     public ResponseResult updateRegion(@RequestBody GeoRegion updateRegion) {
-        boolean result = regionService.updateById(updateRegion);
-        if (result) {
-            log.info(updateRegion + "---修改成功");
-            return ResponseResult.SUCCESS().setData(updateRegion);
-        } else {
-            log.info(updateRegion + "---修改失败");
-            return ResponseResult.FAILED("修改失败");
+        // 判断是否存在同名区域
+        QueryWrapper<GeoRegion> qw = new QueryWrapper<>();
+        qw.eq("region_name", updateRegion.getRegion_name());
+        GeoRegion region = regionService.getOne(qw);
+        // 如果修改后存在同名区域且code不一样，则不可以改名
+        if (region!=null&&region.getRegion_code()!=updateRegion.getRegion_code()){
+            log.info("---存在同名区域，修改失败"+updateRegion);
+            return ResponseResult.FAILED("存在同名区域，修改失败");
+        }
+        else {
+            boolean result = regionService.updateById(updateRegion);
+            if (result) {
+                log.info(updateRegion + "---修改成功");
+                return ResponseResult.SUCCESS().setData(updateRegion);
+            } else {
+                log.info(updateRegion + "---修改失败");
+                return ResponseResult.FAILED("修改失败");
+            }
         }
     }
 
@@ -132,7 +143,7 @@ public class GeoController {
 
     @PostMapping("/province/add")
     public ResponseResult addProvince(@RequestBody GeoProvince addProvince) {
-        // 判断是否存在同名区域
+        // 判断是否存在同名省份
         QueryWrapper<GeoProvince> qw = new QueryWrapper<>();
         qw.eq("province_name", addProvince.getProvince_name());
         GeoProvince province = provinceService.getOne(qw);
@@ -153,13 +164,24 @@ public class GeoController {
 
     @PostMapping("/province/update")
     public ResponseResult updateProvince(@RequestBody GeoProvince updateProvince) {
-        boolean result = provinceService.updateById(updateProvince);
-        if (result) {
-            log.info(updateProvince + "---修改成功");
-            return ResponseResult.SUCCESS().setData(updateProvince);
-        } else {
-            log.info(updateProvince + "---修改失败");
-            return ResponseResult.FAILED("修改失败");
+        // 判断是否存在同名省份
+        QueryWrapper<GeoProvince> qw = new QueryWrapper<>();
+        qw.eq("province_name", updateProvince.getProvince_name());
+        GeoProvince province = provinceService.getOne(qw);
+        // 如果修改后存在同名省份且code不一样，则不可以改名
+        if (province!=null&&province.getProvince_code()!=updateProvince.getProvince_code()){
+            log.info("---存在同名省份，修改失败"+updateProvince);
+            return ResponseResult.FAILED("存在同名省份，修改失败");
+        }
+        else {
+            boolean result = provinceService.updateById(updateProvince);
+            if (result) {
+                log.info(updateProvince + "---修改成功");
+                return ResponseResult.SUCCESS().setData(updateProvince);
+            } else {
+                log.info(updateProvince + "---修改失败");
+                return ResponseResult.FAILED("修改失败");
+            }
         }
     }
 
@@ -228,13 +250,24 @@ public class GeoController {
 
     @PostMapping("/city/update")
     public ResponseResult updateCity(@RequestBody GeoCity updateCity) {
-        boolean result = cityService.updateById(updateCity);
-        if (result) {
-            log.info(updateCity + "---修改成功");
-            return ResponseResult.SUCCESS().setData(updateCity);
-        } else {
-            log.info(updateCity + "---修改失败");
-            return ResponseResult.FAILED("修改失败");
+        // 判断是否存在同名区域
+        QueryWrapper<GeoCity> qw = new QueryWrapper<>();
+        qw.eq("city_name", updateCity.getCity_name());
+        GeoCity city = cityService.getOne(qw);
+        // 如果修改后存在同名城市且code不一样，则不可以改名
+        if (city!=null&&city.getCity_code()!=updateCity.getCity_code()){
+            log.info("---存在同名城市，修改失败"+updateCity);
+            return ResponseResult.FAILED("存在同名城市，修改失败");
+        }
+        else {
+            boolean result = cityService.updateById(updateCity);
+            if (result) {
+                log.info(updateCity + "---修改成功");
+                return ResponseResult.SUCCESS().setData(updateCity);
+            } else {
+                log.info(updateCity + "---修改失败");
+                return ResponseResult.FAILED("修改失败");
+            }
         }
     }
 

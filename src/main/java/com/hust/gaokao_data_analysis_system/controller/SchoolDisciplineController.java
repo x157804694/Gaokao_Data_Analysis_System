@@ -29,7 +29,17 @@ public class SchoolDisciplineController {
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pgSchoolDisciplineVos = schoolDisciplineService.findAllByPage(pg);
+        Page pgSchoolDisciplineVos = schoolDisciplineService.findAllByPage(pg, 0);
+        log.info("---分页查询学校学科门类"+pgSchoolDisciplineVos.getRecords());
+        return ResponseResult.SUCCESS().setData(pgSchoolDisciplineVos);
+    }
+
+    @RequestMapping("/list/{schoolId}")
+    public ResponseResult getAllSchoolDisciplineByPageAndSchool(@RequestBody PageRequest pageRequest,@PathVariable("schoolId") long schoolId){
+        int currentPage = pageRequest.getCurrentPage();
+        int pageSize = pageRequest.getPageSize();
+        Page pg = new Page<>(currentPage, pageSize);
+        Page pgSchoolDisciplineVos = schoolDisciplineService.findAllByPage(pg, schoolId);
         log.info("---分页查询学校学科门类"+pgSchoolDisciplineVos.getRecords());
         return ResponseResult.SUCCESS().setData(pgSchoolDisciplineVos);
     }

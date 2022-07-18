@@ -14,5 +14,5 @@ public interface RankRkService extends IService<RankRk> {
 
     RankRk findNewest(Integer rk_school);
 
-    Page<RankRk> findAll(Page<RankRk> page);
+    Page<RankRk> findAll(Page<RankRk> page,String year);
 }

@@ -30,8 +30,8 @@ public class RankXyhServiceImpl extends ServiceImpl<RankXyhMapper, RankXyh>
     }
 
     @Override
-    public Page<RankXyh> findAll(Page<RankXyh> page) {
-        return xyhMapper.findAll(page);
+    public Page<RankXyh> findAll(Page<RankXyh> page, String year) {
+        return xyhMapper.findAll(page,year);
     }
 }
 

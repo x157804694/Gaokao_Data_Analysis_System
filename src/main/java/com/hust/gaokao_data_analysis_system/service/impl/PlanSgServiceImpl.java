@@ -25,8 +25,8 @@ public class PlanSgServiceImpl extends ServiceImpl<PlanSgMapper, PlanSg>
     }
 
     @Override
-    public Page<PlanSg> findAll(Page<PlanSg> page) {
-        return sgMapper.findAll(page);
+    public Page<PlanSg> findAll(Page<PlanSg> page, String year) {
+        return sgMapper.findAll(page,year);
     }
 }
 

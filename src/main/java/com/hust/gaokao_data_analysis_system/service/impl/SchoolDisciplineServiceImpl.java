@@ -1,5 +1,6 @@
 package com.hust.gaokao_data_analysis_system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolDiscipline;
@@ -28,8 +29,8 @@ public class SchoolDisciplineServiceImpl extends ServiceImpl<SchoolDisciplineMap
     }
 
     @Override
-    public Page<SchoolDisciplineVo> findAllByPage(Page<SchoolDisciplineVo> page) {
-        return schoolDisciplineMapper.findAllByPage(page);
+    public Page<SchoolDisciplineVo> findAllByPage(Page<SchoolDisciplineVo> page, long schoolId) {
+        return schoolDisciplineMapper.findAllByPage(page, schoolId);
     }
 
     @Override

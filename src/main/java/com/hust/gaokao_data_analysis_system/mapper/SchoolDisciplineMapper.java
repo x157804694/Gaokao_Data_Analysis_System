@@ -16,7 +16,7 @@ import java.util.List;
 */
 @Repository
 public interface SchoolDisciplineMapper extends BaseMapper<SchoolDiscipline> {
-    Page<SchoolDisciplineVo> findAllByPage(Page<SchoolDisciplineVo> page);
+    Page<SchoolDisciplineVo> findAllByPage(Page<SchoolDisciplineVo> page, long schoolId);
     List<SchoolDisciplineVo> findAll(long schoolId);
 }
 

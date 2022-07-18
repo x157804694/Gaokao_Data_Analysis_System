@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.SchoolMajorDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolSubject;
 import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo;
@@ -29,11 +30,13 @@ public class SchoolMajorController {
     }
 
     @RequestMapping("/list")
-    public ResponseResult getAllSchoolMajorByPage(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllSchoolMajorByPage(@RequestBody SchoolMajorDTO schoolMajorDTO) {
+        int currentPage = schoolMajorDTO.getCurrentPage();
+        int pageSize = schoolMajorDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page<SchoolMajorVo> schoolMajorVoPage = schoolMajorService.findAllByPage(pg);
+        // 根据schoolId,disciplineId,SubjectId筛选
+        System.out.println("---查询条件"+schoolMajorDTO);
+        Page<SchoolMajorVo> schoolMajorVoPage = schoolMajorService.findAllByPage(pg,schoolMajorDTO.getSchool_id(),schoolMajorDTO.getDiscipline_id(),schoolMajorDTO.getSubject_id());
         log.info("---分页查询所有学校专业" + schoolMajorVoPage.getRecords());
         return ResponseResult.SUCCESS().setData(schoolMajorVoPage);
     }

@@ -30,8 +30,8 @@ public class RankUsServiceImpl extends ServiceImpl<RankUsMapper, RankUs>
     }
 
     @Override
-    public Page<RankUs> findAll(Page<RankUs> page) {
-        return usMapper.findAll(page);
+    public Page<RankUs> findAll(Page<RankUs> page, String year) {
+        return usMapper.findAll(page, year);
     }
 }
 

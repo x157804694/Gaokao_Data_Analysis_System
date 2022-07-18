@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface PlanDualMapper extends BaseMapper<PlanDual> {
-    Page<PlanDual> findAll(Page<PlanDual> page);
+    Page<PlanDual> findAll(Page<PlanDual> page, String year);
 }
 
 

@@ -1,6 +1,5 @@
 package com.hust.gaokao_data_analysis_system.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 @Data
@@ -19,7 +18,19 @@ public class SchoolMajorVo {
 
     private String major_name;
 
-    private String major_subject;
+    // SubjectInfo
+    private Integer subject_code;
+
+    private String subject_id;
+
+    private String subject_name;
+
+    // DisciplineInfo
+    private Integer discipline_code;
+
+    private String discipline_id;
+
+    private String discipline_name;
 
     // SchoolMajorInfo
     private Integer school_major_code;

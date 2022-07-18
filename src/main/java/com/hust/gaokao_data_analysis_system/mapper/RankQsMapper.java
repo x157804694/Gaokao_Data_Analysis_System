@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface RankQsMapper extends BaseMapper<RankQs> {
 
     RankQs findNewest(@Param("qs_school") Integer qs_school);
-    Page<RankQs> findAll(Page<RankQs> page);
+    Page<RankQs> findAll(Page<RankQs> page, String year);
 }
 
 

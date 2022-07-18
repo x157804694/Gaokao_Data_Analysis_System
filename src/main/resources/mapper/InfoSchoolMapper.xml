@@ -41,4 +41,36 @@
         school_requirments,create_time,update_time,
         school_dual,school_qj,school_sg
     </sql>
+    <insert id="addBatch" parameterType="java.util.List">
+        insert into t_info_school(school_id, school_name, school_level, school_type, school_nature, school_region, school_province, school_city, school_211, school_985, school_belong, school_rk, school_xyh, school_wsl, school_qs, school_us, school_tws, school_requirments,create_time,update_time)
+        values
+        <foreach collection="schoolList" item="school" separator=",">
+            (
+             #{school.school_id},#{school.school_name},#{school.school_level},#{school.school_type},#{school.school_nature},
+             #{school.school_region},#{school.school_province},#{school.school_city},
+             #{school.school_211},#{school.school_985},#{school.school_belong},
+             #{school.school_rk},#{school.school_xyh},#{school.school_wsl},#{school.school_qs},#{school.school_us},#{school.school_tws},
+             #{school.school_requirments},
+             now(),now()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        school_level = values(school_level),
+        school_type = values(school_type),
+        school_nature = values(school_nature),
+        school_region = values(school_region),
+        school_province = values(school_province),
+        school_city = values(school_city),
+        school_211 = values(school_211),
+        school_985 = values(school_985),
+        school_belong = values(school_belong),
+        school_rk = values(school_rk),
+        school_xyh = values(school_xyh),
+        school_wsl = values(school_wsl),
+        school_qs = values(school_qs),
+        school_us = values(school_us),
+        school_tws = values(school_tws),
+        school_requirments = values(school_requirments),
+        update_time = now()
+    </insert>
 </mapper>

@@ -19,6 +19,9 @@
     <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDisciplineVo">
         SELECT * FROM t_school_discipline LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id
             LEFT JOIN t_info_discipline ON t_school_discipline.school_discipline_discipline = t_info_discipline.discipline_id
+            <where>
+                <if test="schoolId != 0">t_info_school.school_id = #{schoolId}</if>
+            </where>
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDisciplineVo">
         SELECT * FROM t_school_discipline LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id

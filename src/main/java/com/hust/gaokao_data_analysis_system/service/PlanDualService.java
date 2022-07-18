@@ -10,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-06-27 11:16:06
 */
 public interface PlanDualService extends IService<PlanDual> {
-    Page<PlanDual> findAll(Page<PlanDual> page);
+    Page<PlanDual> findAll(Page<PlanDual> page, String year);
 }

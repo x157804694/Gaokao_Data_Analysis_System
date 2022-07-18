@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RankWslMapper extends BaseMapper<RankWsl> {
     RankWsl findNewest(@Param("wsl_school") Integer wsl_school);
-    Page<RankWsl> findAll(Page<RankWsl> page);
+    Page<RankWsl> findAll(Page<RankWsl> page, String year);
 }
 
 

@@ -2,8 +2,8 @@ package com.hust.gaokao_data_analysis_system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hust.gaokao_data_analysis_system.common.PageRequest;
 import com.hust.gaokao_data_analysis_system.common.ResponseResult;
+import com.hust.gaokao_data_analysis_system.pojo.dto.MajorDTO;
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoMajor;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoMajorServiceImpl;
 import lombok.extern.log4j.Log4j;
@@ -24,13 +24,16 @@ public class MajorController {
     }
 
     @RequestMapping("/list")
-    public ResponseResult getAllMajorByPage(@RequestBody PageRequest pageRequest) {
-        int currentPage = pageRequest.getCurrentPage();
-        int pageSize = pageRequest.getPageSize();
+    public ResponseResult getAllMajorByPage(@RequestBody MajorDTO majorDTO) {
+        int currentPage = majorDTO.getCurrentPage();
+        int pageSize = majorDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        Page pgMajors = majorService.page(pg);
+        String discipline_level = majorDTO.getDiscipline_level();
+        String discipline_id = majorDTO.getDiscipline_id();
+        String subject_id = majorDTO.getSubject_id();
+        Page pgMajors = majorService.findAllByPage(pg, discipline_level, discipline_id, subject_id);
         log.info("---分页查询所有major" + pgMajors.getRecords());
-        return ResponseResult.SUCCESS().setData(pgMajors.getRecords());
+        return ResponseResult.SUCCESS().setData(pgMajors);
     }
 
     @RequestMapping("/listAll/{subjectId}")
@@ -44,7 +47,7 @@ public class MajorController {
     @RequestMapping("/add")
     public ResponseResult addMajor(@RequestBody InfoMajor addMajor){
         QueryWrapper<InfoMajor> qw = new QueryWrapper<>();
-        InfoMajor major = majorService.getOne(qw.eq("major_name",addMajor.getMajor_name()));
+        InfoMajor major = majorService.getOne(qw.eq("major_id",addMajor.getMajor_id()));
         if (major==null){
             boolean result = majorService.save(addMajor);
             if (result){
@@ -57,8 +60,8 @@ public class MajorController {
             }
         }
         else {
-            log.info("---存在同名专业，请勿重复添加");
-            return ResponseResult.FAILED("存在同名专业，请勿重复添加!");
+            log.info("---存在同编号专业，请勿重复添加");
+            return ResponseResult.FAILED("专业id已存在，请勿重复添加!");
         }
     }
 
