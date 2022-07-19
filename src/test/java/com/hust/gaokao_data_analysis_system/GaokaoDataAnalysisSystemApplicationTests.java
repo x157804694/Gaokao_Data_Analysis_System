@@ -16,7 +16,7 @@ class GaokaoDataAnalysisSystemApplicationTests {
         InfoUser user = new InfoUser();
         user.setUsername("张三");
         user.setPassword("123");
-        user.setIs_admin(1);
+        user.setRole("ROLE_USER");
         int result = infoUserMapper.insert(user);
         System.out.println(result);
     }

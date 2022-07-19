@@ -40,8 +40,8 @@ public class InfoUser extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableField(value = "is_admin")
-    private Integer is_admin;
+    @TableField(value = "role")
+    private String role;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

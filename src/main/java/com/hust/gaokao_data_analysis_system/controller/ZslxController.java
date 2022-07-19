@@ -79,7 +79,7 @@ public class ZslxController {
         return ResponseResult.SUCCESS().setData(pageZslxs);
     }
 
-    @PostMapping("/listall")
+    @GetMapping("/listAll")
     public ResponseResult getAllZslxs(){
         List<InfoZslx> zslxes = zslxService.list();
         if(!zslxes.isEmpty()){

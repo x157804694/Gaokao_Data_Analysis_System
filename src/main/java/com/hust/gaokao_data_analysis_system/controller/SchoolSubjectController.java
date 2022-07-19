@@ -10,10 +10,7 @@ import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo;
 import com.hust.gaokao_data_analysis_system.service.impl.SchoolSubjectServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,14 +36,14 @@ public class SchoolSubjectController {
         return ResponseResult.SUCCESS().setData(pageSchoolSubjects);
     }
 
-    @RequestMapping("/listAll/{schoolId}")
+    @GetMapping("/listAll/{schoolId}")
     public ResponseResult getAllSchoolSubjectBySchoolId(@PathVariable("schoolId") long schoolId) {
         List<SchoolSubjectVo> schoolSubjectVoList = schoolSubjectService.findAll(schoolId, null);
         log.info("---查询该学校所有一级学科" + schoolSubjectVoList);
         return ResponseResult.SUCCESS().setData(schoolSubjectVoList);
     }
 
-    @RequestMapping("/listAll/{schoolId}/{disciplineId}")
+    @GetMapping("/listAll/{schoolId}/{disciplineId}")
     public ResponseResult getAllSchoolSubjectBySchoolId(@PathVariable("schoolId") long schoolId,@PathVariable("disciplineId") String disciplineId) {
         List<SchoolSubjectVo> schoolSubjectVoList = schoolSubjectService.findAll(schoolId, disciplineId);
         log.info("---查询该学校某门类下所有一级学科" + schoolSubjectVoList);

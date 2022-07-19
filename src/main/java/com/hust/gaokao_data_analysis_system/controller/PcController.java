@@ -79,7 +79,7 @@ public class PcController {
         return ResponseResult.SUCCESS().setData(pagePcs);
     }
 
-    @PostMapping("/listall")
+    @GetMapping("/listAll")
     public ResponseResult getAllPc(){
         List<InfoPc> pcs = pcService.list();
         if(!pcs.isEmpty()){

@@ -76,7 +76,7 @@ public class UserController {
         InfoUser user = userService.getOne(qw);
         if (user == null) {
             // 设置非管理员
-            registerUser.setIs_admin(0);
+            registerUser.setRole("ROLE_USER");
             boolean result = userService.save(registerUser);
             if (result) {
                 log.info(registerUser + "---注册成功");

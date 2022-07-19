@@ -42,7 +42,7 @@ public class LqSchoolMajorController {
         return ResponseResult.SUCCESS().setData(lqSchoolMajorPage);
     }
 
-    @RequestMapping("/listAll/{schoolId}")
+    @GetMapping("/listAll/{schoolId}")
     public ResponseResult getAlllqSchoolMajorBySchool(@PathVariable("schoolId") long schoolId){
         List<LqSchoolMajorVo> lqSchoolMajorVoList = lqSchoolMajorService.findAll(schoolId);
         log.info("---查询某学校专业录取分数线"+lqSchoolMajorVoList);

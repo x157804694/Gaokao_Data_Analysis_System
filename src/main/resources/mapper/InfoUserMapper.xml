@@ -10,11 +10,11 @@
             <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="is_admin" column="is_admin" jdbcType="INTEGER"/>
+            <result property="role" column="role" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         uid,username,password,
-        create_time,update_time,is_admin
+        create_time,update_time,role
     </sql>
 </mapper>

@@ -11,10 +11,7 @@ import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo;
 import com.hust.gaokao_data_analysis_system.service.impl.SchoolMajorServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class SchoolMajorController {
         return ResponseResult.SUCCESS().setData(schoolMajorVoPage);
     }
 
-    @RequestMapping("/listAll/{schoolId}")
+    @GetMapping("/listAll/{schoolId}")
     public ResponseResult getAllSchoolMajorBySchool(@PathVariable("schoolId") long schoolId) {
         List<SchoolMajorVo> schoolMajorVoList = schoolMajorService.findAll(schoolId);
         log.info("---查询该学校所有专业" + schoolMajorVoList);

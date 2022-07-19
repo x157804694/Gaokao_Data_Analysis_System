@@ -28,7 +28,7 @@ public class SchoolInfoController {
         this.schoolService = schoolService;
     }
 
-    @PostMapping("/listAll")
+    @GetMapping("/listAll")
     public ResponseResult getAllSchool(){
         List<InfoSchool> schoolList = schoolService.list();
         log.info("---查询所有学校信息"+schoolList);

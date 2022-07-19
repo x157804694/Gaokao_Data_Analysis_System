@@ -41,7 +41,7 @@ public class ZsSchoolMajorController {
         return ResponseResult.SUCCESS().setData(zsSchoolMajorVoPage);
     }
 
-    @RequestMapping("/listAll/{schoolId}")
+    @GetMapping("/listAll/{schoolId}")
     public ResponseResult getAllZsSchoolMajorBySchool(@PathVariable("schoolId") long schoolId){
         List<ZsSchoolMajorVo> zsSchoolMajorVoList = zsSchoolMajorService.findAll(schoolId);
         log.info("---查询某学校专业招生计划"+zsSchoolMajorVoList);

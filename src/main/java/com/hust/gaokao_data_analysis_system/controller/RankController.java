@@ -115,7 +115,7 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageQsRanks);
     }
 
-    @PostMapping("/qs/listAll")
+    @GetMapping("/qs/listAll")
     public ResponseResult getAllQss() {
         List<RankQs> qss = qsService.list();
         if (!qss.isEmpty()) {
@@ -237,7 +237,7 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageRkRanks);
     }
 
-    @PostMapping("/rk/listAll")
+    @GetMapping("/rk/listAll")
     public ResponseResult getAllRks() {
         List<RankRk> rks = rkService.list();
         if (!rks.isEmpty()) {
@@ -358,7 +358,7 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageTwsRanks);
     }
 
-    @PostMapping("/tws/listAll")
+    @GetMapping("/tws/listAll")
     public ResponseResult getAllTwss() {
         List<RankTws> twss = twsService.list();
         if (!twss.isEmpty()) {
@@ -479,7 +479,7 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageUsRanks);
     }
 
-    @PostMapping("/us/listAll")
+    @GetMapping("/us/listAll")
     public ResponseResult getAllUss() {
         List<RankUs> uss = usService.list();
         if (!uss.isEmpty()) {
@@ -600,7 +600,7 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageWslRanks);
     }
 
-    @PostMapping("/wsl/listAll")
+    @GetMapping("/wsl/listAll")
     public ResponseResult getAllWsls() {
         List<RankWsl> wsls = wslService.list();
         if (!wsls.isEmpty()) {
@@ -721,7 +721,7 @@ public class RankController {
         return ResponseResult.SUCCESS().setData(pageXyhRanks);
     }
 
-    @PostMapping("/xyh/listAll")
+    @GetMapping("/xyh/listAll")
     public ResponseResult getAllXyhs() {
         List<RankXyh> xyhs = xyhService.list();
         if (!xyhs.isEmpty()) {

@@ -2,6 +2,7 @@ package com.hust.gaokao_data_analysis_system.mapper;
 
 import com.hust.gaokao_data_analysis_system.pojo.entity.InfoUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
 * @author XDL
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2022-06-27 11:16:06
 * @Entity com.hust.gaokao_data_analysis_system.pojo.entity.InfoUser
 */
+@Repository
 public interface InfoUserMapper extends BaseMapper<InfoUser> {
 
 }

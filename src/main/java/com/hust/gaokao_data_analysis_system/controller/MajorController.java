@@ -36,7 +36,7 @@ public class MajorController {
         return ResponseResult.SUCCESS().setData(pgMajors);
     }
 
-    @RequestMapping("/listAll/{subjectId}")
+    @GetMapping("/listAll/{subjectId}")
     public ResponseResult getAllMajorBySubject(@PathVariable("subjectId") String subjectId){
         QueryWrapper<InfoMajor> qw = new QueryWrapper<>();
         List<InfoMajor> majors = majorService.list(qw.eq("major_subject",subjectId));

@@ -44,7 +44,7 @@ public class SchoolDisciplineController {
         return ResponseResult.SUCCESS().setData(pgSchoolDisciplineVos);
     }
 
-    @RequestMapping("/listAll/{schoolId}")
+    @GetMapping("/listAll/{schoolId}")
     public ResponseResult getAllSchoolDisciplineBySchoolId(@PathVariable("schoolId") long schoolId){
         List<SchoolDisciplineVo> schoolDisciplineList = schoolDisciplineService.findAll(schoolId);
         log.info("---查询该学校所有学科门类"+schoolDisciplineList);
