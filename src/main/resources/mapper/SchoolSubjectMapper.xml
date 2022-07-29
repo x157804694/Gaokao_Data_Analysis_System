@@ -24,16 +24,20 @@
         update_time
     </sql>
     <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo">
-        SELECT * FROM t_school_subject LEFT JOIN t_info_school ON t_school_subject.school_subject_school = t_info_school.school_id
+        SELECT * FROM t_school_subject
+        LEFT JOIN t_info_school ON t_school_subject.school_subject_school = t_info_school.school_id
         LEFT JOIN t_info_subject ON t_school_subject.school_subject_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline  on t_info_subject.subject_discipline = t_info_discipline.discipline_id
         <where>
             <if test="schoolId != 0">t_school_subject.school_subject_school = #{schoolId}</if>
             <if test="disciplineId != null and disciplineId != ''">AND t_info_subject.subject_discipline = #{disciplineId}</if>
         </where>
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo">
-        SELECT * FROM t_school_subject LEFT JOIN t_info_school ON t_school_subject.school_subject_school = t_info_school.school_id
+        SELECT * FROM t_school_subject
+        LEFT JOIN t_info_school ON t_school_subject.school_subject_school = t_info_school.school_id
         LEFT JOIN t_info_subject ON t_school_subject.school_subject_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline  on t_info_subject.subject_discipline = t_info_discipline.discipline_id
         <where>
             <if test="schoolId != 0">t_school_subject.school_subject_school = #{schoolId}</if>
             <if test="disciplineId != null and disciplineId != ''">AND t_info_subject.subject_discipline = #{disciplineId}</if>

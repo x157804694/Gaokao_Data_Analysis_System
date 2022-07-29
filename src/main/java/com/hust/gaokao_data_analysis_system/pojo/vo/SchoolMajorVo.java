@@ -2,6 +2,8 @@ package com.hust.gaokao_data_analysis_system.pojo.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class SchoolMajorVo {
     // schoolInfo
@@ -12,6 +14,8 @@ public class SchoolMajorVo {
     private String school_name;
 
     // MajorInfo
+    private List<MajorVo> majorList;
+/*    // MajorInfo
     private Integer major_code;
 
     private String major_id;
@@ -30,7 +34,7 @@ public class SchoolMajorVo {
 
     private String discipline_id;
 
-    private String discipline_name;
+    private String discipline_name;*/
 
     // SchoolMajorInfo
     private Integer school_major_code;

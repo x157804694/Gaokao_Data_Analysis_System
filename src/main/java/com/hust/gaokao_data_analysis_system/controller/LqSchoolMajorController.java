@@ -25,7 +25,7 @@ public class LqSchoolMajorController {
         this.lqSchoolMajorService = lqSchoolMajorService;
     }
 
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public ResponseResult getAlllqSchoolMajorByPage(@RequestBody ZsOrLQSchoolMajorDTO zsSchoolMajorDTO){
         int currentPage = zsSchoolMajorDTO.getCurrentPage();
         int pageSize = zsSchoolMajorDTO.getPageSize();
@@ -49,7 +49,7 @@ public class LqSchoolMajorController {
         return ResponseResult.SUCCESS().setData(lqSchoolMajorVoList);
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public ResponseResult addLqSchoolMajor(@RequestBody LqSchoolMajor addLqSchoolMajor){
         QueryWrapper<LqSchoolMajor> qw = new QueryWrapper<>();
         qw.eq("lq_school_major_school", addLqSchoolMajor.getLq_school_major_school());
@@ -74,7 +74,7 @@ public class LqSchoolMajorController {
         }
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public ResponseResult updateLqSchoolMajor(@RequestBody LqSchoolMajor updateLqSchoolMajor){
         boolean result = lqSchoolMajorService.updateById(updateLqSchoolMajor);
         if (result){

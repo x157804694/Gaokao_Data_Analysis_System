@@ -31,4 +31,8 @@ public class ResponseResult {
         this.data = data;
         return this;
     }
+    public ResponseResult setMessage(String message) {
+        this.message = message;
+        return this;
+    }
 }

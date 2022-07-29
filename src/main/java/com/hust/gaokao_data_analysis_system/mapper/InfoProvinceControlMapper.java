@@ -14,7 +14,7 @@ import java.util.List;
 */
 @Repository
 public interface InfoProvinceControlMapper extends BaseMapper<InfoProvinceControl> {
-    List<String> getYearByProvince(String provinceName);
+    List<String> getYearsByProvince(String provinceName);
 }
 
 

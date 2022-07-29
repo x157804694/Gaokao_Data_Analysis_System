@@ -28,7 +28,7 @@ public class ProvinceControlController {
         this.provinceControlService = provinceControlService;
     }
 
-    @RequestMapping("/listByPage")
+    @PostMapping("/listByPage")
     public ResponseResult getAllProvinceControlByPage(@RequestBody PageRequest pageRequest) {
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
@@ -38,7 +38,7 @@ public class ProvinceControlController {
         return ResponseResult.SUCCESS().setData(infoProvinceControlPage);
     }
 
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public ResponseResult getAllByCols(@RequestBody ProvinceControlDTO provinceControlDTO) {
         int currentPage = provinceControlDTO.getCurrentPage();
         int pageSize = provinceControlDTO.getPageSize();
@@ -59,7 +59,23 @@ public class ProvinceControlController {
         return ResponseResult.SUCCESS().setData(provinceControlPage);
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/getOneByCols")
+    public ResponseResult getOneByCols(@RequestBody ProvinceControlDTO provinceControlDTO){
+        // 参数对象转为map
+        Map<String, String> provinceControlMap = new HashMap<String, String>();
+        provinceControlMap = JSON.parseObject(JSON.toJSONString(provinceControlDTO), new TypeReference<Map<String, String>>() {
+        });
+        provinceControlMap.remove("pageSize");
+        provinceControlMap.remove("currentPage");
+        System.out.println("-----查询条件" + provinceControlMap);
+        QueryWrapper<InfoProvinceControl> qw = new QueryWrapper<>();
+        qw.allEq(provinceControlMap, false);
+        InfoProvinceControl provinceControl = provinceControlService.getOne(qw);
+        log.info("---根据省份、年份、批次、招生类型查询省控线"+provinceControl);
+        return ResponseResult.SUCCESS().setData(provinceControl);
+    }
+
+    @PostMapping("/add")
     public ResponseResult addProvinceControl(@RequestBody InfoProvinceControl addProvinceControl){
         // 判断是否存在同省份同年份同招生类型同批次
         QueryWrapper<InfoProvinceControl> qw = new QueryWrapper<>();
@@ -86,7 +102,7 @@ public class ProvinceControlController {
 
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public ResponseResult updateProvinceControl(@RequestBody InfoProvinceControl updateProvinceControl){
         boolean result = provinceControlService.updateById(updateProvinceControl);
         if (result){
@@ -99,7 +115,7 @@ public class ProvinceControlController {
         }
     }
 
-    @RequestMapping("/delete/{provinceControlCode}")
+    @DeleteMapping("/delete/{provinceControlCode}")
     public ResponseResult deleteProvinceControl(@PathVariable("provinceControlCode") long provinceControlCode){
         InfoProvinceControl infoProvinceControl = provinceControlService.getById(provinceControlCode);
         if (infoProvinceControl!=null){
@@ -121,7 +137,7 @@ public class ProvinceControlController {
 
     @GetMapping("/getYearByProvince/{provinceName}")
     public ResponseResult getYearByProvince(@PathVariable("provinceName") String provinceName){
-        List<String> yearList = provinceControlService.getYearByProvince(provinceName);
+        List<String> yearList = provinceControlService.getYearsByProvince(provinceName);
         log.info("---根据省份查询省控线的年份"+yearList);
         return ResponseResult.SUCCESS().setData(yearList);
     }

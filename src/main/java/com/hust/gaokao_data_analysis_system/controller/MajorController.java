@@ -23,7 +23,7 @@ public class MajorController {
         this.majorService = majorService;
     }
 
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public ResponseResult getAllMajorByPage(@RequestBody MajorDTO majorDTO) {
         int currentPage = majorDTO.getCurrentPage();
         int pageSize = majorDTO.getPageSize();
@@ -44,7 +44,7 @@ public class MajorController {
         return ResponseResult.SUCCESS().setData(majors);
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public ResponseResult addMajor(@RequestBody InfoMajor addMajor){
         QueryWrapper<InfoMajor> qw = new QueryWrapper<>();
         InfoMajor major = majorService.getOne(qw.eq("major_id",addMajor.getMajor_id()));
@@ -65,7 +65,7 @@ public class MajorController {
         }
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public ResponseResult updateMajor(@RequestBody InfoMajor updateMajor){
         boolean result = majorService.updateById(updateMajor);
         if (result){

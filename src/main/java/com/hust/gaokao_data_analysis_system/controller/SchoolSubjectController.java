@@ -25,7 +25,7 @@ public class SchoolSubjectController {
         this.schoolSubjectService = schoolSubjectService;
     }
 
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public ResponseResult getAllSchoolSubjectByPage(@RequestBody SchoolSubjectDTO schoolSubjectDTO) {
         int currentPage = schoolSubjectDTO.getCurrentPage();
         int pageSize = schoolSubjectDTO.getPageSize();
@@ -50,7 +50,7 @@ public class SchoolSubjectController {
         return ResponseResult.SUCCESS().setData(schoolSubjectVoList);
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public ResponseResult addSchoolSubject(@RequestBody SchoolSubject addSchoolSubject) {
         QueryWrapper<SchoolSubject> qw = new QueryWrapper<>();
         qw.eq("school_subject_school", addSchoolSubject.getSchool_subject_school());
@@ -71,7 +71,7 @@ public class SchoolSubjectController {
         }
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public ResponseResult updateSchoolSubject(@RequestBody SchoolSubject updateSchoolSubject) {
         boolean result = schoolSubjectService.updateById(updateSchoolSubject);
         if (result) {
@@ -83,7 +83,7 @@ public class SchoolSubjectController {
         }
     }
 
-    @RequestMapping("/delete/{schoolSubjectCode}")
+    @DeleteMapping("/delete/{schoolSubjectCode}")
     public ResponseResult deleteSchoolSubject(@PathVariable("schoolSubjectCode") long schoolSubjectCode) {
         SchoolSubject schoolSubject = schoolSubjectService.getById(schoolSubjectCode);
         if (schoolSubject != null) {

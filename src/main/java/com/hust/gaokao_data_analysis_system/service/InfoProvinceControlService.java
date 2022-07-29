@@ -11,5 +11,5 @@ import java.util.List;
 * @createDate 2022-07-11 18:49:15
 */
 public interface InfoProvinceControlService extends IService<InfoProvinceControl> {
-    List<String> getYearByProvince(String provinceName);
+    List<String> getYearsByProvince(String provinceName);
 }

@@ -24,7 +24,7 @@ public class SchoolDisciplineController {
         this.schoolDisciplineService = schoolDisciplineService;
     }
 
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public ResponseResult getAllSchoolDisciplineByPage(@RequestBody PageRequest pageRequest){
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
@@ -34,7 +34,7 @@ public class SchoolDisciplineController {
         return ResponseResult.SUCCESS().setData(pgSchoolDisciplineVos);
     }
 
-    @RequestMapping("/list/{schoolId}")
+    @PostMapping("/list/{schoolId}")
     public ResponseResult getAllSchoolDisciplineByPageAndSchool(@RequestBody PageRequest pageRequest,@PathVariable("schoolId") long schoolId){
         int currentPage = pageRequest.getCurrentPage();
         int pageSize = pageRequest.getPageSize();
@@ -51,7 +51,7 @@ public class SchoolDisciplineController {
         return ResponseResult.SUCCESS().setData(schoolDisciplineList);
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public ResponseResult addSchoolDiscipline(@RequestBody SchoolDiscipline addSchoolDiscipline){
         QueryWrapper<SchoolDiscipline> qw = new QueryWrapper<>();
         qw.eq("school_discipline_school",addSchoolDiscipline.getSchool_discipline_school());
@@ -75,7 +75,7 @@ public class SchoolDisciplineController {
         }
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public ResponseResult updateSchoolDiscipline(@RequestBody SchoolDiscipline updateSchoolDiscipline){
         QueryWrapper<SchoolDiscipline> qw = new QueryWrapper<>();
         qw.eq("school_discipline_school",updateSchoolDiscipline.getSchool_discipline_school());

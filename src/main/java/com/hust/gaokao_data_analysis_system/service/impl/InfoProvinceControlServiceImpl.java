@@ -24,8 +24,8 @@ public class InfoProvinceControlServiceImpl extends ServiceImpl<InfoProvinceCont
     }
 
     @Override
-    public List<String> getYearByProvince(String provinceName) {
-        return provinceControlMapper.getYearByProvince(provinceName);
+    public List<String> getYearsByProvince(String provinceName) {
+        return provinceControlMapper.getYearsByProvince(provinceName);
     }
 }
 

@@ -3,7 +3,7 @@ package com.hust.gaokao_data_analysis_system.pojo.vo;
 import lombok.Data;
 
 @Data
-public class SchoolSubjectVo {
+public class SchoolDualSubjectVo {
     // schoolInfo
     private Integer school_code;
 
@@ -25,16 +25,11 @@ public class SchoolSubjectVo {
 
     private String discipline_name;
 
-    // schoolSubjectInfo
-    private Integer school_subject_code;
+    // dualSubjectInfo
+    private Integer school_dual_subject_code;
 
-    private Integer school_subject_best_flag;
+    private Integer school_dual_subject_school_subject;
 
-    private Integer school_subject_1_phd_flag;
+    private String school_dual_subject_year;
 
-    private Integer school_subject_1_master_flag;
-
-    private Integer school_subject_dual_flag;
-
-    private String school_subject_rank;
 }

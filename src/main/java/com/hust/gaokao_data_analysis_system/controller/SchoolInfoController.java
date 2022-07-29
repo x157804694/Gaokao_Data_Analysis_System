@@ -30,7 +30,9 @@ public class SchoolInfoController {
 
     @GetMapping("/listAll")
     public ResponseResult getAllSchool(){
-        List<InfoSchool> schoolList = schoolService.list();
+        QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
+        qw.orderByDesc("school_name");
+        List<InfoSchool> schoolList = schoolService.list(qw);
         log.info("---查询所有学校信息"+schoolList);
         return ResponseResult.SUCCESS().setData(schoolList);
     }
