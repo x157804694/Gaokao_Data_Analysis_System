@@ -3,6 +3,7 @@ package com.hust.gaokao_data_analysis_system.mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hust.gaokao_data_analysis_system.pojo.vo.MajorVo;
 import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo;
 import org.springframework.stereotype.Repository;
 
@@ -16,8 +17,9 @@ import java.util.List;
 */
 @Repository
 public interface SchoolMajorMapper extends BaseMapper<SchoolMajor> {
-    Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page, long schoolId, String disciplineId, String subjectId);
+    Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page, long schoolId);
     List<SchoolMajorVo> findAll(long SchoolId);
+    List<MajorVo> findAllMajorsBySchool(long SchoolId);
 }
 
 

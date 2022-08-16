@@ -27,5 +27,6 @@
                 t1.xyh_year = #{year}
             </if>
         </where>
+        ORDER BY t1.xyh_year DESC,t2.school_id
     </select>
 </mapper>

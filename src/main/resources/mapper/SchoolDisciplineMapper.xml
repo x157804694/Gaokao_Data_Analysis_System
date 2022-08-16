@@ -17,14 +17,18 @@
         create_time,update_time
     </sql>
     <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDisciplineVo">
-        SELECT * FROM t_school_discipline LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id
-            LEFT JOIN t_info_discipline ON t_school_discipline.school_discipline_discipline = t_info_discipline.discipline_id
-            <where>
-                <if test="schoolId != 0">t_info_school.school_id = #{schoolId}</if>
-            </where>
+        SELECT * FROM t_school_discipline
+        LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id
+        LEFT JOIN t_info_discipline ON t_school_discipline.school_discipline_discipline = t_info_discipline.discipline_id
+        <where>
+            <if test="schoolId != 0">t_info_school.school_id = #{schoolId}</if>
+        </where>
+        ORDER BY t_info_school.school_id,t_info_discipline.discipline_id
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDisciplineVo">
-        SELECT * FROM t_school_discipline LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id
-            LEFT JOIN t_info_discipline ON t_school_discipline.school_discipline_discipline = t_info_discipline.discipline_id WHERE t_school_discipline.school_discipline_school = #{schoolId}
+        SELECT * FROM t_school_discipline
+        LEFT JOIN t_info_school ON t_school_discipline.school_discipline_school = t_info_school.school_id
+        LEFT JOIN t_info_discipline ON t_school_discipline.school_discipline_discipline = t_info_discipline.discipline_id WHERE t_school_discipline.school_discipline_school = #{schoolId}
+        ORDER BY t_info_school.school_id,t_info_discipline.discipline_id
     </select>
 </mapper>

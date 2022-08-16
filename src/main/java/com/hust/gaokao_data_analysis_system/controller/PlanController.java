@@ -63,6 +63,7 @@ public class PlanController {
     public ResponseResult addDualPlan(@RequestBody PlanDual addDual) {
         // 判断添加的学校已存在
         QueryWrapper<PlanDual> qw = new QueryWrapper<>();
+        qw.eq("dual_year", addDual.getDual_year());
         qw.eq("dual_school", addDual.getDual_school());
         PlanDual dual = dualService.getOne(qw);
         if (dual == null) {
@@ -87,20 +88,31 @@ public class PlanController {
                 return ResponseResult.FAILED("请先添加该学校基本信息，再进行操作");
             }
         } else {
-            log.info("---该学校已经存在此表中" + addDual);
-            return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
+            log.info("---已有该学校在该年为双一流的记录" + addDual);
+            return ResponseResult.FAILED("已有该学校在该年为双一流的记录！请勿重复添加");
         }
     }
 
     @PostMapping("/dual/update")
     public ResponseResult updateDualPlan(@RequestBody PlanDual updateDual) {
-        boolean result = dualService.updateById(updateDual);
-        if (result) {
-            log.info("---修改成功" + updateDual);
-            return ResponseResult.SUCCESS().setData(updateDual);
-        } else {
-            log.info("---修改失败");
-            return ResponseResult.FAILED("修改失败");
+        // 判断添加的学校已存在
+        QueryWrapper<PlanDual> qw = new QueryWrapper<>();
+        qw.eq("dual_year", updateDual.getDual_year());
+        qw.eq("dual_school", updateDual.getDual_school());
+        PlanDual dual = dualService.getOne(qw);
+        if (dual == null) {
+            boolean result = dualService.updateById(updateDual);
+            if (result) {
+                log.info("---修改成功" + updateDual);
+                return ResponseResult.SUCCESS().setData(updateDual);
+            } else {
+                log.info("---修改失败");
+                return ResponseResult.FAILED("修改失败");
+            }
+        }
+        else {
+            log.info("---已有该学校在该年为双一流的记录" + updateDual);
+            return ResponseResult.FAILED("已有该学校在该年为双一流的记录！请勿重复添加");
         }
     }
 
@@ -237,7 +249,7 @@ public class PlanController {
         int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
         String year = planDTO.getSg_year();
-        Page pageDualPlans = sgService.findAll(pg,year);
+        Page pageDualPlans = sgService.findAll(pg, year);
         log.info("---分页查询双高计划高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
     }

@@ -23,5 +23,6 @@
                 t1.qj_year = #{year}
             </if>
         </where>
+        ORDER BY t1.qj_year DESC,t1.qj_school
     </select>
 </mapper>

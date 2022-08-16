@@ -9,6 +9,7 @@ import com.hust.gaokao_data_analysis_system.pojo.entity.InfoMajor;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajorMajor;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolSubject;
+import com.hust.gaokao_data_analysis_system.pojo.vo.MajorVo;
 import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo;
 import com.hust.gaokao_data_analysis_system.service.impl.InfoMajorServiceImpl;
 import com.hust.gaokao_data_analysis_system.service.impl.SchoolMajorMajorServiceImpl;
@@ -39,9 +40,9 @@ public class SchoolMajorController {
         int currentPage = schoolMajorDTO.getCurrentPage();
         int pageSize = schoolMajorDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
-        // 根据schoolId,disciplineId,SubjectId筛选
+        // 根据schoolId筛选
         System.out.println("---查询条件"+schoolMajorDTO);
-        Page<SchoolMajorVo> schoolMajorVoPage = schoolMajorService.findAllByPage(pg,schoolMajorDTO.getSchool_id(),schoolMajorDTO.getDiscipline_id(),schoolMajorDTO.getSubject_id());
+        Page<SchoolMajorVo> schoolMajorVoPage = schoolMajorService.findAllByPage(pg,schoolMajorDTO.getSchool_id());
         log.info("---分页查询所有学校专业" + schoolMajorVoPage.getRecords());
         return ResponseResult.SUCCESS().setData(schoolMajorVoPage);
     }
@@ -51,6 +52,13 @@ public class SchoolMajorController {
         List<SchoolMajorVo> schoolMajorVoList = schoolMajorService.findAll(schoolId);
         log.info("---查询该学校所有专业" + schoolMajorVoList);
         return ResponseResult.SUCCESS().setData(schoolMajorVoList);
+    }
+
+    @GetMapping("/listAllMajors/{schoolId}")
+    public ResponseResult getSchoolMajorList(@PathVariable("schoolId") long schoolId){
+        List<MajorVo> majorList = schoolMajorService.findAllMajorsBySchool(schoolId);
+        log.info("---查询该学校专业的所有对应专业"+majorList);
+        return ResponseResult.SUCCESS().setData(majorList);
     }
 
     @PostMapping("/add")

@@ -43,6 +43,7 @@
             <if test="pcCode!=0">AND t_info_pc.pc_code=#{pcCode}</if>
             <if test="year!=null">AND t_lq_school_major.lq_school_major_year=#{year}</if>
         </where>
+        ORDER BY t_info_school.school_id,t_lq_school_major.lq_school_major_year DESC,t_geo_province.province_code,t_info_zslx.zslx_code,t_info_pc.pc_code
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.LqSchoolMajorVo">
         SELECT * FROM t_lq_school_major
@@ -52,5 +53,6 @@
         LEFT JOIN t_info_pc ON t_lq_school_major.lq_school_major_pc = t_info_pc.pc_code
         LEFT JOIN t_school_major ON t_lq_school_major.lq_school_major_major = t_school_major.school_major_code
         WHERE t_lq_school_major.lq_school_major_school = #{schoolId}
+        ORDER BY t_info_school.school_id,t_lq_school_major.lq_school_major_year DESC,t_geo_province.province_code,t_info_zslx.zslx_code,t_info_pc.pc_code
     </select>
 </mapper>

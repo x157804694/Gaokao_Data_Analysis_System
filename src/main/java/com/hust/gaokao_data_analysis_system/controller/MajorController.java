@@ -36,10 +36,18 @@ public class MajorController {
         return ResponseResult.SUCCESS().setData(pgMajors);
     }
 
+    @GetMapping("/listAll")
+    public ResponseResult getAllMajor(){
+        QueryWrapper<InfoMajor> qw = new QueryWrapper<>();
+        List<InfoMajor> majors = majorService.list(qw.orderByAsc("major_id"));
+        log.info("---查询所有专业信息"+majors);
+        return ResponseResult.SUCCESS().setData(majors);
+    }
+
     @GetMapping("/listAll/{subjectId}")
     public ResponseResult getAllMajorBySubject(@PathVariable("subjectId") String subjectId){
         QueryWrapper<InfoMajor> qw = new QueryWrapper<>();
-        List<InfoMajor> majors = majorService.list(qw.eq("major_subject",subjectId));
+        List<InfoMajor> majors = majorService.list(qw.eq("major_subject",subjectId).orderByAsc("major_id"));
         log.info("---根据一级学科查询所有专业"+majors);
         return ResponseResult.SUCCESS().setData(majors);
     }

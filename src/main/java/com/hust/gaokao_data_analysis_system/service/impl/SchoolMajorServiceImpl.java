@@ -3,6 +3,7 @@ package com.hust.gaokao_data_analysis_system.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hust.gaokao_data_analysis_system.pojo.entity.SchoolMajor;
+import com.hust.gaokao_data_analysis_system.pojo.vo.MajorVo;
 import com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo;
 import com.hust.gaokao_data_analysis_system.service.SchoolMajorService;
 import com.hust.gaokao_data_analysis_system.mapper.SchoolMajorMapper;
@@ -27,13 +28,18 @@ public class SchoolMajorServiceImpl extends ServiceImpl<SchoolMajorMapper, Schoo
     }
 
     @Override
-    public Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page, long schoolId, String disciplineId, String subjectId) {
-        return schoolMajorMapper.findAllByPage(page,schoolId,disciplineId,subjectId);
+    public Page<SchoolMajorVo> findAllByPage(Page<SchoolMajorVo> page, long schoolId) {
+        return schoolMajorMapper.findAllByPage(page,schoolId);
     }
 
     @Override
     public List<SchoolMajorVo> findAll(long schoolId) {
         return schoolMajorMapper.findAll(schoolId);
+    }
+
+    @Override
+    public List<MajorVo> findAllMajorsBySchool(long SchoolId) {
+        return schoolMajorMapper.findAllMajorsBySchool(SchoolId);
     }
 }
 

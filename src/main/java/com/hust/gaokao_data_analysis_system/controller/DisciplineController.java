@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,14 +32,15 @@ public class DisciplineController {
         Page pg = new Page<>(currentPage, pageSize);
         String discipline_level = disciplineInfoDTO.getDiscipline_level();
         Page pageDisciplines = null;
+        QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
+        qw.orderByAsc("discipline_id");
         if (discipline_level!=null){
-            QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
             qw.eq("discipline_level", discipline_level);
             pageDisciplines = disciplineService.page(pg,qw);
             log.info("---根据等级分页查询所有门类" + pageDisciplines.getRecords());
         }
         else {
-            pageDisciplines = disciplineService.page(pg);
+            pageDisciplines = disciplineService.page(pg,qw);
             log.info("---分页查询所有门类" + pageDisciplines.getRecords());
         }
         return ResponseResult.SUCCESS().setData(pageDisciplines);
@@ -46,7 +48,12 @@ public class DisciplineController {
 
     @GetMapping ("/listAll")
     public ResponseResult getAllDiscipline() {
-        List<InfoDiscipline> disciplines = disciplineService.list();
+        QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
+        List<String> orderlist = new ArrayList<>();
+        orderlist.add("discipline_id");
+        orderlist.add("discipline_level");
+        qw.orderByAsc(orderlist);
+        List<InfoDiscipline> disciplines = disciplineService.list(qw);
         log.info("---查询所有门类" + disciplines);
         return ResponseResult.SUCCESS().setData(disciplines);
     }
@@ -54,6 +61,7 @@ public class DisciplineController {
     public ResponseResult getAllDisciplineByLevel(@PathVariable("discipline_level") String discipline_level) {
         QueryWrapper<InfoDiscipline> qw = new QueryWrapper<>();
         qw.eq("discipline_level", discipline_level);
+        qw.orderByAsc("discipline_id");
         List<InfoDiscipline> disciplines = disciplineService.list(qw);
         log.info("---根据门类等级查询相应门类" + disciplines);
         return ResponseResult.SUCCESS().setData(disciplines);

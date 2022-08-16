@@ -32,6 +32,7 @@
             <if test="schoolId != 0">t_school_subject.school_subject_school = #{schoolId}</if>
             <if test="disciplineId != null and disciplineId != ''">AND t_info_subject.subject_discipline = #{disciplineId}</if>
         </where>
+        ORDER BY t_info_school.school_id,t_info_subject.subject_id
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolSubjectVo">
         SELECT * FROM t_school_subject
@@ -42,5 +43,6 @@
             <if test="schoolId != 0">t_school_subject.school_subject_school = #{schoolId}</if>
             <if test="disciplineId != null and disciplineId != ''">AND t_info_subject.subject_discipline = #{disciplineId}</if>
         </where>
+        ORDER BY t_info_school.school_id,t_info_subject.subject_id
     </select>
 </mapper>

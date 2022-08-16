@@ -39,14 +39,14 @@ public class SchoolDualSubjectController {
         Page pg = new Page<>(currentPage, pageSize);
         System.out.println("---查询条件" + schoolDualSubjectDTO);
         Page pageSchoolSubjects = schoolDualSubjectService.findAllByPage(pg, schoolDualSubjectDTO.getSchool_id(), schoolDualSubjectDTO.getDiscipline_id(), schoolDualSubjectDTO.getYear());
-        log.info("---根据各类条件，分页查询学校双一级学科" + pageSchoolSubjects.getRecords());
+        log.info("---根据各类条件，分页查询学校双一流学科" + pageSchoolSubjects.getRecords());
         return ResponseResult.SUCCESS().setData(pageSchoolSubjects);
     }
 
     @GetMapping("/listAll/{schoolId}/{year}")
     public ResponseResult getAllSchoolDualSubjectBySchool(@PathVariable("schoolId") long schoolId,@PathVariable("year") String year) {
         List<SchoolDualSubjectVo> schoolDualSubjectVoList = schoolDualSubjectService.findAll(schoolId, year);
-        log.info("---查询该学校"+year+"年份的所有双一流学科" + schoolDualSubjectVoList);
+        log.info("---查询该学校"+year+"年份的双一流学科" + schoolDualSubjectVoList);
         return ResponseResult.SUCCESS().setData(schoolDualSubjectVoList);
     }
 
@@ -58,7 +58,7 @@ public class SchoolDualSubjectController {
         qw.eq("school_dual_subject_year", addSchoolDualSubject.getSchool_dual_subject_year());
         SchoolDualSubject schoolDualSubject = schoolDualSubjectService.getOne(qw);
         if (schoolDualSubject == null) {
-            Boolean result = schoolDualSubjectService.save(addSchoolDualSubject);
+            boolean result = schoolDualSubjectService.save(addSchoolDualSubject);
             if (result) {
                 log.info("---新增该学校双一流学科" + addSchoolDualSubject);
                 String year = addSchoolDualSubject.getSchool_dual_subject_year();
@@ -99,7 +99,21 @@ public class SchoolDualSubjectController {
                     SchoolSubject schoolSubject = schoolSubjectService.getById(updateSchoolDualSubject.getSchool_dual_subject_school_subject());
                     schoolSubject.setSchool_subject_dual_flag(1);
                     schoolSubjectService.updateById(schoolSubject);
-                    System.out.println("---修改双一流标记成功");
+                    System.out.println("---修改双一流标记成功1");
+                }
+                // 如果修改的最新年份不是2022年，并且不存在2022年双一流学科的记录，那么将是否双一流标志修改为0
+                else {
+                    QueryWrapper<SchoolDualSubject> qw2 = new QueryWrapper<>();
+                    qw.eq("school_dual_subject_school_subject", updateSchoolDualSubject.getSchool_dual_subject_school_subject());
+                    qw.eq("school_dual_subject_year", "2022");
+                    SchoolDualSubject schoolDualSubject2022 = schoolDualSubjectService.getOne(qw);
+                    if (schoolDualSubject2022==null){
+                        // 将学校一级学科字段中的是否双一流标志修改为0
+                        SchoolSubject schoolSubject = schoolSubjectService.getById(updateSchoolDualSubject.getSchool_dual_subject_school_subject());
+                        schoolSubject.setSchool_subject_dual_flag(0);
+                        schoolSubjectService.updateById(schoolSubject);
+                        System.out.println("---修改双一流标记成功0");
+                    }
                 }
                 return ResponseResult.SUCCESS();
             } else {

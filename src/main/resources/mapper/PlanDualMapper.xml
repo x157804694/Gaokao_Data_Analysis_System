@@ -23,5 +23,6 @@
                 t1.dual_year = #{year}
             </if>
         </where>
+        ORDER BY t1.dual_year DESC,t1.dual_school
     </select>
 </mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.SchoolQjMajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.SchoolQjMajor">
+            <id property="school_qj_major_code" column="school_qj_major_code" jdbcType="INTEGER"/>
+            <result property="school_qj_major_major" column="school_qj_major_school_major" jdbcType="INTEGER"/>
+            <result property="school_qj_major_year" column="school_qj_major_year" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        school_qj_major_code,school_qj_major_major,school_qj_major_year,
+        create_time, update_time
+    </sql>
+    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolQjMajorVo">
+        SELECT * FROM t_school_qj_major
+        LEFT JOIN t_info_school ON t_school_qj_major.school_qj_major_school = t_info_school.school_id
+        LEFT JOIN t_info_major ON t_school_qj_major.school_qj_major_major = t_info_major.major_id
+        LEFT JOIN t_info_subject ON t_info_major.major_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline ON t_info_subject.subject_discipline = t_info_discipline.discipline_id
+        <where>
+            <if test="schoolId != 0">t_info_school.school_id = #{schoolId}</if>
+            <if test="subjectId != null and subjectId != ''">AND t_info_subject.subject_id = #{subjectId}</if>
+            <if test="disciplineId != null and disciplineId != ''">AND t_info_discipline.discipline_id = #{disciplineId}</if>
+            <if test="year != null">AND t_school_qj_major.school_qj_major_year = #{year}</if>
+        </where>
+        ORDER BY t_info_school.school_id,t_info_major.major_id, t_school_qj_major.school_qj_major_year DESC
+    </select>
+    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolQjMajorVo">
+        SELECT * FROM t_school_qj_major
+        LEFT JOIN t_info_school ON t_school_qj_major.school_qj_major_school = t_info_school.school_id
+        LEFT JOIN t_info_major ON t_school_qj_major.school_qj_major_major = t_info_major.major_id
+        LEFT JOIN t_info_subject ON t_info_major.major_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline ON t_info_subject.subject_discipline = t_info_discipline.discipline_id
+        <where>
+            <if test="schoolId != 0">t_info_school.school_id = #{schoolId}</if>
+            <if test="year != null">AND t_school_qj_major.school_qj_major_year = #{year}</if>
+        </where>
+        ORDER BY t_info_school.school_id,t_info_major.major_id, t_school_qj_major.school_qj_major_year DESC
+    </select>
+    <select id="getYearsBySchool" resultType="java.lang.String">
+        SELECT DISTINCT school_qj_major_year FROM t_school_qj_major
+        LEFT JOIN t_info_school on t_info_school.school_id = t_school_qj_major.school_qj_major_school
+        WHERE t_school_qj_major.school_qj_major_school = #{schoolId}
+    </select>
+</mapper>

@@ -32,5 +32,6 @@
                 and t_info_subject.subject_id = #{subjectId}
             </if>
         </where>
+        order by t_info_major.major_id
     </select>
 </mapper>

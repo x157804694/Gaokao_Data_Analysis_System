@@ -42,6 +42,7 @@
         LEFT JOIN t_info_subject ON t_info_major.major_subject = t_info_subject.subject_id
         LEFT JOIN t_info_discipline ON t_info_subject.subject_discipline = t_info_discipline.discipline_id
         WHERE t_school_major_major.schoolMajor_major_schoolMajor = #{school_major_code}
+        ORDER BY t_info_major.major_id
     </select>
     <select id="findAll" resultMap="SchoolMajorVo">
         SELECT * FROM t_school_major
@@ -49,6 +50,7 @@
         <where>
             <if test="schoolId!=0">t_info_school.school_id = #{schoolId}</if>
         </where>
+        ORDER BY t_info_school.school_id,t_school_major.school_major_name
     </select>
     <select id="findAllByPage" resultMap="SchoolMajorVo">
         SELECT * FROM t_school_major
@@ -56,8 +58,17 @@
         <where>
             <if test="schoolId!=0">t_info_school.school_id = #{schoolId}</if>
         </where>
+        ORDER BY t_info_school.school_id,t_school_major.school_major_name
     </select>
-<!--    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo">-->
+    <select id="findAllMajorsBySchool" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.MajorVo">
+        SELECT DISTINCT t_info_major.*,t_info_subject.*,t_info_discipline.* FROM t_school_major
+        LEFT JOIN t_school_major_major on t_school_major.school_major_code = t_school_major_major.schoolMajor_major_schoolMajor
+        LEFT JOIN t_info_major ON t_school_major_major.schoolMajor_major_major = t_info_major.major_id
+        LEFT JOIN t_info_subject ON t_info_major.major_subject = t_info_subject.subject_id
+        LEFT JOIN t_info_discipline ON t_info_subject.subject_discipline = t_info_discipline.discipline_id
+        ORDER BY t_info_major.major_id
+    </select>
+    <!--    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolMajorVo">-->
 <!--        SELECT * FROM t_school_major-->
 <!--        LEFT JOIN t_info_school ON t_school_major.school_major_school = t_info_school.school_id-->
 <!--        LEFT JOIN t_info_major ON t_school_major.school_major_major = t_info_major.major_id-->

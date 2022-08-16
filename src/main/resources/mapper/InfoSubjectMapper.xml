@@ -28,5 +28,6 @@
                 and t_info_subject.subject_discipline = #{disciplineId}
             </if>
         </where>
+        order by t_info_subject.subject_id
     </select>
 </mapper>

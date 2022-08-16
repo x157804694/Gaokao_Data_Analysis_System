@@ -24,10 +24,10 @@
         LEFT JOIN t_info_discipline on t_info_subject.subject_discipline = t_info_discipline.discipline_id
         <where>
             <if test="schoolId != 0">t_school_subject.school_subject_school = #{schoolId}</if>
-            <if test="disciplineId != null and disciplineId != ''">AND t_info_subject.subject_discipline = #{disciplineId}</if>
-            <if test="year != null">AND t_school_dual_subject.school_dual_subject_year = #{year}</if>
+            <if test="disciplineId!=null and disciplineId !=''">AND t_info_subject.subject_discipline = #{disciplineId}</if>
+            <if test="year!=null">AND t_school_dual_subject.school_dual_subject_year = #{year}</if>
         </where>
-        ORDER BY t_info_school.school_id,t_info_subject.subject_name
+        ORDER BY t_info_school.school_id,t_info_subject.subject_id,t_school_dual_subject.school_dual_subject_year DESC
     </select>
     <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.vo.SchoolDualSubjectVo">
         SELECT * FROM t_school_dual_subject
@@ -36,10 +36,10 @@
         LEFT JOIN t_info_subject on t_school_subject.school_subject_subject = t_info_subject.subject_id
         LEFT JOIN t_info_discipline on t_info_subject.subject_discipline = t_info_discipline.discipline_id
         <where>
-            <if test="schoolId != 0">t_school_subject.school_subject_school = #{schoolId}</if>
-            <if test="year != null">AND t_school_dual_subject.school_dual_subject_year = #{year}</if>
+            <if test="schoolId!=0">t_school_subject.school_subject_school = #{schoolId}</if>
+            <if test="year!=null">AND t_school_dual_subject.school_dual_subject_year = #{year}</if>
         </where>
-        ORDER BY t_info_school.school_id,t_info_subject.subject_name
+        ORDER BY t_info_school.school_id,t_info_subject.subject_id,t_school_dual_subject.school_dual_subject_year DESC
     </select>
     <select id="getYearsBySchool" resultType="java.lang.String">
         SELECT DISTINCT school_dual_subject_year FROM t_school_dual_subject
