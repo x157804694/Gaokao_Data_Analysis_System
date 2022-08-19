@@ -16,7 +16,7 @@
         dual_code,dual_school,dual_year,
         create_time,update_time
     </sql>
-    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual">
+    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual">
         SELECT t1.*,t2.school_name as dual_schoolName FROM t_plan_dual as t1 LEFT JOIN t_info_school as t2 on t1.dual_school = t2.school_id
         <where>
             <if test="year!=null">
@@ -24,5 +24,10 @@
             </if>
         </where>
         ORDER BY t1.dual_year DESC,t1.dual_school
+    </select>
+    <select id="findAllByYear" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual">
+        SELECT t1.*,t2.school_name as dual_schoolName FROM t_plan_dual as t1 LEFT JOIN t_info_school as t2 on t1.dual_school = t2.school_id
+        where t1.dual_year = #{year}
+        ORDER BY t1.dual_school
     </select>
 </mapper>

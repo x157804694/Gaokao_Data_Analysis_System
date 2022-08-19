@@ -8,6 +8,8 @@ import com.hust.gaokao_data_analysis_system.mapper.PlanDualMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_plan_dual】的数据库操作Service实现
@@ -25,8 +27,13 @@ public class PlanDualServiceImpl extends ServiceImpl<PlanDualMapper, PlanDual>
     }
 
     @Override
-    public Page<PlanDual> findAll(Page<PlanDual> page, String year) {
-        return dualMapper.findAll(page, year);
+    public Page<PlanDual> findAllByPage(Page<PlanDual> page, String year) {
+        return dualMapper.findAllByPage(page, year);
+    }
+
+    @Override
+    public List<PlanDual> findAllByYear(String year) {
+        return dualMapper.findAllByYear(year);
     }
 }
 

@@ -8,6 +8,8 @@ import com.hust.gaokao_data_analysis_system.mapper.PlanQjMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_plan_qj】的数据库操作Service实现
@@ -25,8 +27,13 @@ public class PlanQjServiceImpl extends ServiceImpl<PlanQjMapper, PlanQj>
     }
 
     @Override
-    public Page<PlanQj> findAll(Page<PlanQj> page, String year) {
-        return qjMapper.findAll(page,year);
+    public Page<PlanQj> findAllByPage(Page<PlanQj> page, String year) {
+        return qjMapper.findAllByPage(page,year);
+    }
+
+    @Override
+    public List<PlanQj> findAllByYear(String year) {
+        return qjMapper.findAllByYear(year);
     }
 }
 

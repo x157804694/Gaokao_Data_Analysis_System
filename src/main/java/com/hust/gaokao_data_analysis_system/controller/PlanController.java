@@ -54,9 +54,16 @@ public class PlanController {
         int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
         String year = planDTO.getDual_year();
-        Page pageDualPlans = dualService.findAll(pg, year);
+        Page pageDualPlans = dualService.findAllByPage(pg, year);
         log.info("---查询双一流高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
+    }
+
+    @GetMapping("/dual/listByYear/{year}")
+    public ResponseResult getAllDualPlanByYear(@PathVariable("year") String year) {
+        List<PlanDual> planDualList = dualService.findAllByYear(year);
+        log.info("---查询所有双一流高校名单" + planDualList);
+        return ResponseResult.SUCCESS().setData(planDualList);
     }
 
     @PostMapping("/dual/add")
@@ -109,8 +116,7 @@ public class PlanController {
                 log.info("---修改失败");
                 return ResponseResult.FAILED("修改失败");
             }
-        }
-        else {
+        } else {
             log.info("---已有该学校在该年为双一流的记录" + updateDual);
             return ResponseResult.FAILED("已有该学校在该年为双一流的记录！请勿重复添加");
         }
@@ -158,9 +164,16 @@ public class PlanController {
         int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
         String year = planDTO.getQj_year();
-        Page pageDualPlans = qjService.findAll(pg, year);
+        Page pageDualPlans = qjService.findAllByPage(pg, year);
         log.info("---分页查询强基计划高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
+    }
+
+    @GetMapping("/qj/listByYear/{year}")
+    public ResponseResult getAllQjPlanByYear(@PathVariable("year") String year) {
+        List<PlanQj> planQjList = qjService.findAllByYear(year);
+        log.info("---查询所有强基计划高校名单" + planQjList);
+        return ResponseResult.SUCCESS().setData(planQjList);
     }
 
     @PostMapping("/qj/add")
@@ -168,6 +181,7 @@ public class PlanController {
         // 判断添加的学校已存在
         QueryWrapper<PlanQj> qw = new QueryWrapper<>();
         qw.eq("qj_school", addQj.getQj_school());
+        qw.eq("qj_year", addQj.getQj_school());
         PlanQj qj = qjService.getOne(qw);
         if (qj == null) {
             // 该表依赖学校信息表，这个学校必须在学校信息表中存在
@@ -192,19 +206,29 @@ public class PlanController {
             }
         } else {
             log.info("---该学校已经存在此表中" + addQj);
-            return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
+            return ResponseResult.FAILED("已有该学校在该年为强基计划高校的记录！请勿重复添加");
         }
     }
 
     @PostMapping("/qj/update")
     public ResponseResult updateQjPlan(@RequestBody PlanQj updateQj) {
-        boolean result = qjService.updateById(updateQj);
-        if (result) {
-            log.info("---修改成功" + updateQj);
-            return ResponseResult.SUCCESS().setData(updateQj);
+        // 判断添加的学校已存在
+        QueryWrapper<PlanQj> qw = new QueryWrapper<>();
+        qw.eq("qj_year", updateQj.getQj_year());
+        qw.eq("qj_school", updateQj.getQj_school());
+        PlanQj qj = qjService.getOne(qw);
+        if (qj == null) {
+            boolean result = qjService.updateById(updateQj);
+            if (result) {
+                log.info("---修改成功" + updateQj);
+                return ResponseResult.SUCCESS().setData(updateQj);
+            } else {
+                log.info("---修改失败");
+                return ResponseResult.FAILED("修改失败");
+            }
         } else {
-            log.info("---修改失败");
-            return ResponseResult.FAILED("修改失败");
+            log.info("---已有该学校在该年为强基计划的记录" + updateQj);
+            return ResponseResult.FAILED("已有该学校在该年为强基计划的记录！请勿重复添加");
         }
     }
 
@@ -239,9 +263,10 @@ public class PlanController {
         QueryWrapper<PlanQj> qw = new QueryWrapper<>();
         qw.select("distinct qj_year");
         List<Object> years = qjService.listObjs(qw);
-        log.info("---查询双一流计划所有年份" + years);
+        log.info("---查询强基计划所有年份" + years);
         return ResponseResult.SUCCESS().setData(years);
     }
+
 
     @PostMapping("/sg/list")
     public ResponseResult getAllSgPlan(@RequestBody PlanDTO planDTO) {
@@ -249,9 +274,16 @@ public class PlanController {
         int pageSize = planDTO.getPageSize();
         Page pg = new Page<>(currentPage, pageSize);
         String year = planDTO.getSg_year();
-        Page pageDualPlans = sgService.findAll(pg, year);
+        Page pageDualPlans = sgService.findAllByPage(pg, year);
         log.info("---分页查询双高计划高校名单" + pageDualPlans);
         return ResponseResult.SUCCESS().setData(pageDualPlans);
+    }
+
+    @GetMapping("/sg/listByYear/{year}")
+    public ResponseResult getAllSgPlanByYear(@PathVariable("year") String year) {
+        List<PlanSg> planSgList = sgService.findAllByYear(year);
+        log.info("---查询所有双高计划高校名单" + planSgList);
+        return ResponseResult.SUCCESS().setData(planSgList);
     }
 
     @PostMapping("/sg/add")
@@ -259,6 +291,7 @@ public class PlanController {
         // 判断添加的学校已存在
         QueryWrapper<PlanSg> qw = new QueryWrapper<>();
         qw.eq("sg_school", addSg.getSg_school());
+        qw.eq("sg_year", addSg.getSg_school());
         PlanSg qj = sgService.getOne(qw);
         if (qj == null) {
             // 该表依赖学校信息表，这个学校必须在学校信息表中存在
@@ -283,19 +316,29 @@ public class PlanController {
             }
         } else {
             log.info("---该学校已经存在此表中" + addSg);
-            return ResponseResult.FAILED("该学校已经存在！请勿重复添加");
+            return ResponseResult.FAILED("已有该学校在该年为双高计划的记录！请勿重复添加");
         }
     }
 
     @PostMapping("/sg/update")
     public ResponseResult updateSgPlan(@RequestBody PlanSg updateSg) {
-        boolean result = sgService.updateById(updateSg);
-        if (result) {
-            log.info("---修改成功" + updateSg);
-            return ResponseResult.SUCCESS().setData(updateSg);
+        // 判断添加的学校已存在
+        QueryWrapper<PlanSg> qw = new QueryWrapper<>();
+        qw.eq("sg_year", updateSg.getSg_year());
+        qw.eq("sg_school", updateSg.getSg_school());
+        PlanSg qj = sgService.getOne(qw);
+        if (qj == null) {
+            boolean result = sgService.updateById(updateSg);
+            if (result) {
+                log.info("---修改成功" + updateSg);
+                return ResponseResult.SUCCESS().setData(updateSg);
+            } else {
+                log.info("---修改失败");
+                return ResponseResult.FAILED("修改失败");
+            }
         } else {
-            log.info("---修改失败");
-            return ResponseResult.FAILED("修改失败");
+            log.info("---已有该学校在该年为双高计划的记录" + updateSg);
+            return ResponseResult.FAILED("已有该学校在该年为双高计划的记录！请勿重复添加");
         }
     }
 
@@ -330,7 +373,7 @@ public class PlanController {
         QueryWrapper<PlanSg> qw = new QueryWrapper<>();
         qw.select("distinct sg_year");
         List<Object> years = sgService.listObjs(qw);
-        log.info("---查询双一流计划所有年份" + years);
+        log.info("---查询双高计划所有年份" + years);
         return ResponseResult.SUCCESS().setData(years);
     }
 }

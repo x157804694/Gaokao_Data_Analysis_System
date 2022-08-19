@@ -5,6 +5,8 @@ import com.hust.gaokao_data_analysis_system.pojo.entity.PlanSg;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_plan_sg】的数据库操作Mapper
@@ -13,7 +15,8 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface PlanSgMapper extends BaseMapper<PlanSg> {
-    Page<PlanSg> findAll(Page<PlanSg> page, String year);
+    Page<PlanSg> findAllByPage(Page<PlanSg> page, String year);
+    List<PlanSg> findAllByYear(String year);
 }
 
 

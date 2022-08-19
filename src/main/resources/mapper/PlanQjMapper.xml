@@ -16,7 +16,7 @@
         qj_code,qj_school,qj_year,
         create_time,update_time
     </sql>
-    <select id="findAll" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanQj">
+    <select id="findAllByPage" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanQj">
         SELECT t1.*,t2.school_name as qj_schoolName FROM t_plan_qj as t1 LEFT JOIN t_info_school as t2 on t1.qj_school = t2.school_id
         <where>
             <if test="year!=null">
@@ -24,5 +24,10 @@
             </if>
         </where>
         ORDER BY t1.qj_year DESC,t1.qj_school
+    </select>
+    <select id="findAllByYear" resultType="com.hust.gaokao_data_analysis_system.pojo.entity.PlanQj">
+        SELECT t1.*,t2.school_name as qj_schoolName FROM t_plan_qj as t1 LEFT JOIN t_info_school as t2 on t1.qj_school = t2.school_id
+        WHERE t1.qj_year = #{year}
+        ORDER BY t1.qj_school
     </select>
 </mapper>

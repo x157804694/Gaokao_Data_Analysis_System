@@ -8,6 +8,8 @@ import com.hust.gaokao_data_analysis_system.mapper.PlanSgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_plan_sg】的数据库操作Service实现
@@ -25,8 +27,13 @@ public class PlanSgServiceImpl extends ServiceImpl<PlanSgMapper, PlanSg>
     }
 
     @Override
-    public Page<PlanSg> findAll(Page<PlanSg> page, String year) {
-        return sgMapper.findAll(page,year);
+    public Page<PlanSg> findAllByPage(Page<PlanSg> page, String year) {
+        return sgMapper.findAllByPage(page,year);
+    }
+
+    @Override
+    public List<PlanSg> findAllByYear(String year) {
+        return sgMapper.findAllByYear(year);
     }
 }
 

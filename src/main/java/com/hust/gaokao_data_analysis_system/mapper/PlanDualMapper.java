@@ -5,6 +5,8 @@ import com.hust.gaokao_data_analysis_system.pojo.entity.PlanDual;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
 * @author XDL
 * @description 针对表【t_plan_dual】的数据库操作Mapper
@@ -13,7 +15,8 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface PlanDualMapper extends BaseMapper<PlanDual> {
-    Page<PlanDual> findAll(Page<PlanDual> page, String year);
+    Page<PlanDual> findAllByPage(Page<PlanDual> page, String year);
+    List<PlanDual> findAllByYear(String year);
 }
 
 
