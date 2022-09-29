@@ -29,11 +29,11 @@ public class SchoolInfoController {
     }
 
     @GetMapping("/listAll")
-    public ResponseResult getAllSchool(){
+    public ResponseResult getAllSchool() {
         QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
-        qw.orderByDesc("school_name");
+        qw.orderByAsc("CONVERT(school_name USING gbk)");
         List<InfoSchool> schoolList = schoolService.list(qw);
-        log.info("---查询所有学校信息"+schoolList);
+        log.info("---查询所有学校信息" + schoolList);
         return ResponseResult.SUCCESS().setData(schoolList);
     }
 
@@ -65,32 +65,30 @@ public class SchoolInfoController {
         schoolInfoVoMap.remove("pageSize");
         schoolInfoVoMap.remove("currentPage");
         // 转换筛选条件：双一流
-        if (schoolInfoDTO.getSchool_dual()==2){
+        if (schoolInfoDTO.getSchool_dual() == 2) {
             schoolInfoVoMap.remove("school_dual");
         }
-        if (schoolInfoDTO.getSchool_qj()==2){
+        if (schoolInfoDTO.getSchool_qj() == 2) {
             schoolInfoVoMap.remove("school_qj");
         }
-        if (schoolInfoDTO.getSchool_sg()==2){
+        if (schoolInfoDTO.getSchool_sg() == 2) {
             schoolInfoVoMap.remove("school_sg");
         }
         // 转换筛选条件：（学校类型：所有：0 双非：1 211：2 985：3）
         schoolInfoVoMap.remove("school_class");
         int schoolClass = schoolInfoDTO.getSchool_class();
-        if (schoolClass==1){
+        if (schoolClass == 1) {
             schoolInfoVoMap.put("school_211", "0");
             schoolInfoVoMap.put("school_985", "0");
-        }
-        else if (schoolClass==2){
+        } else if (schoolClass == 2) {
             schoolInfoVoMap.put("school_211", "1");
-        }
-        else if (schoolClass==3){
+        } else if (schoolClass == 3) {
             schoolInfoVoMap.put("school_985", "1");
         }
-        System.out.println("-----查询条件"+schoolInfoVoMap);
+        System.out.println("-----查询条件" + schoolInfoVoMap);
         // 筛选
-        qw.allEq(schoolInfoVoMap,false);
-        Page pageSchools = schoolService.page(pg,qw);
+        qw.allEq(schoolInfoVoMap, false);
+        Page pageSchools = schoolService.page(pg, qw);
         log.info("---根据各类条件，分页查询所有学校信息" + pageSchools.getRecords());
         return ResponseResult.SUCCESS().setData(pageSchools);
     }
@@ -98,34 +96,36 @@ public class SchoolInfoController {
     @PostMapping("/add")
     public ResponseResult addSchool(@RequestBody InfoSchool addSchool) {
         // 判断是否存在重复的学校名和id
-        QueryWrapper<InfoSchool> qw = new QueryWrapper<>();
-        qw.eq("school_id", addSchool.getSchool_id());
-        qw.eq("school_name", addSchool.getSchool_name());
-        InfoSchool school = schoolService.getOne(qw);
-        if (school == null) {
-            boolean result = schoolService.save(addSchool);
-            if (result) {
-                log.info(addSchool + "---新增学校成功");
-                return ResponseResult.SUCCESS().setData(addSchool);
-            } else {
-                log.info(addSchool + "---新增学校失败");
-                return ResponseResult.FAILED("新增学校失败");
-            }
+        QueryWrapper<InfoSchool> qw1 = new QueryWrapper<>();
+        QueryWrapper<InfoSchool> qw2 = new QueryWrapper<>();
+        qw1.eq("school_id", addSchool.getSchool_id());
+        qw2.eq("school_name", addSchool.getSchool_name());
+        InfoSchool school1 = schoolService.getOne(qw1);
+        InfoSchool school2 = schoolService.getOne(qw2);
+        if (school1 != null) {
+            return ResponseResult.FAILED("存在同id学校，请勿重复添加！");
+        }
+        if (school2 != null) {
+            return ResponseResult.FAILED("存在同名学校，请勿重复添加！");
+        }
+        boolean result = schoolService.save(addSchool);
+        if (result) {
+            log.info(addSchool + "---新增学校成功");
+            return ResponseResult.SUCCESS().setData(addSchool);
         } else {
-            log.info(addSchool + "---同名同id学校已存在");
-            return ResponseResult.FAILED("同名同id学校已存在，请勿重复添加");
+            log.info(addSchool + "---新增学校失败");
+            return ResponseResult.FAILED("新增学校失败");
         }
     }
 
     @PostMapping("/addBatch")
-    public ResponseResult addSchoolOnBatch(@RequestBody List<InfoSchool> schoolList){
+    public ResponseResult addSchoolOnBatch(@RequestBody List<InfoSchool> schoolList) {
         int result = schoolService.addBatch(schoolList);
-        if (result>0){
-            log.info("---批量新增学校成功"+schoolList);
+        if (result > 0) {
+            log.info("---批量新增学校成功" + schoolList);
             return ResponseResult.SUCCESS();
-        }
-        else {
-            log.info("---批量新增学校失败"+schoolList);
+        } else {
+            log.info("---批量新增学校失败" + schoolList);
             return ResponseResult.FAILED("批量新增学校失败");
         }
     }
@@ -134,10 +134,10 @@ public class SchoolInfoController {
     public ResponseResult updateSchool(@RequestBody InfoSchool updateSchool) {
         boolean result = schoolService.updateById(updateSchool);
         if (result) {
-            log.info("---修改学校信息成功"+ updateSchool);
+            log.info("---修改学校信息成功" + updateSchool);
             return ResponseResult.SUCCESS().setData(updateSchool);
         } else {
-            log.info("---修改学校信息失败"+ updateSchool);
+            log.info("---修改学校信息失败" + updateSchool);
             return ResponseResult.FAILED("修改学校信息失败");
         }
     }
