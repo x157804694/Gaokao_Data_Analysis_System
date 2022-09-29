@@ -32,8 +32,8 @@ public class LqSchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableField(value = "lq_school_major_major")
-    private Integer lq_school_major_major;
+    @TableField(value = "lq_school_major_class")
+    private Integer lq_school_major_class;
 
     /**
      * 
