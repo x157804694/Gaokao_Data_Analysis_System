@@ -52,7 +52,7 @@ public class ZsSchoolMajorController {
     public ResponseResult addZsSchoolMajor(@RequestBody ZsSchoolMajor addZsSchoolMajor){
         QueryWrapper<ZsSchoolMajor> qw = new QueryWrapper<>();
         qw.eq("zs_school_major_school", addZsSchoolMajor.getZs_school_major_school());
-        qw.eq("zs_school_major_class", addZsSchoolMajor.getZs_school_major_class());
+        qw.eq("zs_school_major_major", addZsSchoolMajor.getZs_school_major_major());
         qw.eq("zs_school_major_province", addZsSchoolMajor.getZs_school_major_province());
         qw.eq("zs_school_major_year", addZsSchoolMajor.getZs_school_major_year());
         ZsSchoolMajor zsSchoolMajor = zsSchoolMajorService.getOne(qw);

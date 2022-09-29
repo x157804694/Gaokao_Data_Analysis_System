@@ -6,11 +6,6 @@ import java.util.List;
 
 @Data
 public class SchoolMajorVo {
-    // SchoolMajorInfo
-    private Integer school_major_code;
-
-    private Integer school_major_rank;
-
     // schoolInfo
     private Integer school_code;
 
@@ -18,12 +13,14 @@ public class SchoolMajorVo {
 
     private String school_name;
 
-    // DisciplineInfo
-    private Integer discipline_code;
+    // MajorInfo
+    private List<MajorVo> majorList;
+/*    // MajorInfo
+    private Integer major_code;
 
-    private String discipline_id;
+    private String major_id;
 
-    private String discipline_name;
+    private String major_name;
 
     // SubjectInfo
     private Integer subject_code;
@@ -32,10 +29,28 @@ public class SchoolMajorVo {
 
     private String subject_name;
 
-    // MajorInfo
-    private Integer major_code;
+    // DisciplineInfo
+    private Integer discipline_code;
 
-    private String major_id;
+    private String discipline_id;
 
-    private String major_name;
+    private String discipline_name;*/
+
+    // SchoolMajorInfo
+    private Integer school_major_code;
+
+    private String school_major_name;
+
+    private String school_major_time;
+
+    private String school_major_cost;
+
+    private Integer school_major_best_flag;
+
+    private Integer school_major_2_phd_flag;
+
+    private Integer school_major_2_master_flag;
+
+    private Integer school_major_rank;
+
 }
