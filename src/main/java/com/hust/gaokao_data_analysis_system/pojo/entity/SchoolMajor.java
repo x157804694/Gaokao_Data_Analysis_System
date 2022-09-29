@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import com.hust.gaokao_data_analysis_system.common.BasicClass;
 import lombok.Data;
@@ -31,50 +30,16 @@ public class SchoolMajor extends BasicClass implements Serializable {
     private Integer school_major_school;
 
     /**
-     *
-     */
-
-    @TableField(value = "school_major_name")
-    private String school_major_name;
-
-    /**
      * 
      */
-    @TableField(value = "school_major_time")
-    private String school_major_time;
-
-    /**
-     * 
-     */
-    @TableField(value = "school_major_cost")
-    private String school_major_cost;
-
-    /**
-     *
-     */
-    @TableField(value = "school_major_best_flag")
-    private Integer school_major_best_flag;
-
-    /**
-     * 
-     */
-    @TableField(value = "school_major_2_phd_flag")
-    private Integer school_major_2_phd_flag;
-
-    /**
-     * 
-     */
-    @TableField(value = "school_major_2_master_flag")
-    private Integer school_major_2_master_flag;
+    @TableField(value = "school_major_major")
+    private String school_major_major;
 
     /**
      * 
      */
     @TableField(value = "school_major_rank")
     private Integer school_major_rank;
-
-    @TableField(exist = false)
-    private List<String> majorIdList;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -32,8 +32,8 @@ public class ZsSchoolMajor extends BasicClass implements Serializable {
     /**
      * 
      */
-    @TableField(value = "zs_school_major_major")
-    private Integer zs_school_major_major;
+    @TableField(value = "zs_school_major_class")
+    private Integer zs_school_major_class;
 
     /**
      * 

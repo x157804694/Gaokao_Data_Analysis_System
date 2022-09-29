@@ -53,7 +53,7 @@ public class LqSchoolMajorController {
     public ResponseResult addLqSchoolMajor(@RequestBody LqSchoolMajor addLqSchoolMajor){
         QueryWrapper<LqSchoolMajor> qw = new QueryWrapper<>();
         qw.eq("lq_school_major_school", addLqSchoolMajor.getLq_school_major_school());
-        qw.eq("lq_school_major_major", addLqSchoolMajor.getLq_school_major_major());
+        qw.eq("lq_school_major_class", addLqSchoolMajor.getLq_school_major_class());
         qw.eq("lq_school_major_province", addLqSchoolMajor.getLq_school_major_province());
         qw.eq("lq_school_major_year", addLqSchoolMajor.getLq_school_major_year());
         LqSchoolMajor lqSchoolMajor = lqSchoolMajorService.getOne(qw);

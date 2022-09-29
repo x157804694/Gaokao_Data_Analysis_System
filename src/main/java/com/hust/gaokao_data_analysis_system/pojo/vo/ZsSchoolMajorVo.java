@@ -11,22 +11,10 @@ public class ZsSchoolMajorVo {
 
     private String school_name;
 
-    // SchoolMajorInfo
-    private Integer school_major_code;
+    // SchoolClassInfo
+    private Integer school_class_code;
 
-    private String school_major_name;
-
-    private String school_major_time;
-
-    private String school_major_cost;
-
-    private Integer school_major_best_flag;
-
-    private Integer school_major_2_phd_flag;
-
-    private Integer school_major_2_master_flag;
-
-    private Integer school_major_rank;
+    private String school_class_name;
 
     // provinceInfo
     private Integer province_code;

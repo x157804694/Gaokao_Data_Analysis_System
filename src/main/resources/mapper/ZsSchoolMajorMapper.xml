@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.ZsSchoolMajor">
             <id property="zs_school_major_code" column="zs_school_major_code" jdbcType="INTEGER"/>
             <result property="zs_school_major_school" column="zs_school_major_school" jdbcType="INTEGER"/>
-            <result property="zs_school_major_major" column="zs_school_major_major" jdbcType="INTEGER"/>
+            <result property="zs_school_major_class" column="zs_school_major_class" jdbcType="INTEGER"/>
             <result property="zs_school_major_year" column="zs_school_major_year" jdbcType="VARCHAR"/>
             <result property="zs_school_major_number" column="zs_school_major_number" jdbcType="INTEGER"/>
             <result property="zs_school_major_qj_flag" column="zs_school_major_qj_flag" jdbcType="INTEGER"/>
@@ -30,7 +30,7 @@
         LEFT JOIN t_geo_province ON t_zs_school_major.zs_school_major_province = t_geo_province.province_code
         LEFT JOIN t_info_zslx ON t_zs_school_major.zs_school_major_zslx = t_info_zslx.zslx_code
         LEFT JOIN t_info_pc ON t_zs_school_major.zs_school_major_pc = t_info_pc.pc_code
-        LEFT JOIN t_school_major ON t_zs_school_major.zs_school_major_major = t_school_major.school_major_code
+        LEFT JOIN t_school_class on t_zs_school_major.zs_school_major_class = t_school_class.school_class_code
         <where>
             <if test="schoolId!=0">t_info_school.school_id=#{schoolId}</if>
             <if test="provinceCode!=0">AND t_geo_province.province_code=#{provinceCode}</if>
@@ -46,7 +46,7 @@
         LEFT JOIN t_geo_province ON t_zs_school_major.zs_school_major_province = t_geo_province.province_code
         LEFT JOIN t_info_zslx ON t_zs_school_major.zs_school_major_zslx = t_info_zslx.zslx_code
         LEFT JOIN t_info_pc ON t_zs_school_major.zs_school_major_pc = t_info_pc.pc_code
-        LEFT JOIN t_school_major ON t_zs_school_major.zs_school_major_major = t_school_major.school_major_code
+        LEFT JOIN t_school_class on t_zs_school_major.zs_school_major_class = t_school_class.school_class_code
         WHERE t_zs_school_major.zs_school_major_school = #{schoolId}
         ORDER BY t_info_school.school_id,t_zs_school_major.zs_school_major_year DESC,t_geo_province.province_code,t_info_zslx.zslx_code,t_info_pc.pc_code
     </select>
