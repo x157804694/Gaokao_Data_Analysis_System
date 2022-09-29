@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.hust.gaokao_data_analysis_system.GaokaoDataAnalysisSyste
+ mApplication
+

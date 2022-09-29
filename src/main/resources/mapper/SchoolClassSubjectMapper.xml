@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.gaokao_data_analysis_system.mapper.SchoolClassSubjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.hust.gaokao_data_analysis_system.pojo.entity.SchoolClassSubject">
+            <id property="schoolClass_subject_code" column="schoolClass_subject_code" jdbcType="INTEGER"/>
+            <result property="schoolClass_subject_class" column="schoolClass_subject_class" jdbcType="INTEGER"/>
+            <result property="schoolClass_subject_subject" column="schoolClass_subject_subject" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        schoolClass_subject_code,schoolClass_subject_class,schoolClass_subject_subject,
+        create_time,update_time
+    </sql>
+</mapper>
